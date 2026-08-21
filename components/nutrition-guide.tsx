@@ -27,7 +27,7 @@ export function NutritionGuide() {
             Menús de ejemplo
           </CardTitle>
           <CardDescription>
-            Pensados para una persona de ~75 kg en recomposición. Escala las raciones según las calorías que te
+            Pensados para tu caso (~76 kg en recomposición). Escala las raciones según las calorías que te
             dio la calculadora: las estructuras de las comidas se mantienen.
           </CardDescription>
         </CardHeader>

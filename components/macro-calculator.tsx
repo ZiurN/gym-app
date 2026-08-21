@@ -31,8 +31,8 @@ function formatKcal(n: number) {
 
 export function MacroCalculator() {
   const [sex, setSex] = useState<Sex>("male");
-  const [age, setAge] = useState("28");
-  const [weight, setWeight] = useState("75");
+  const [age, setAge] = useState("37");
+  const [weight, setWeight] = useState("76.4");
   const [height, setHeight] = useState("175");
   const [activity, setActivity] = useState("1.375");
   const [goal, setGoal] = useState<Goal>("maintain");
