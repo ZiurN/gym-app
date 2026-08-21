@@ -13,9 +13,9 @@ type Sex = "male" | "female";
 type Goal = "cut" | "maintain" | "gain";
 
 const activityOptions = [
-  { value: "1.375", label: "Ligera — el plan de las semanas 1–2 (3 días de gym)" },
-  { value: "1.55", label: "Moderada — 3–4 días de gym + caminatas" },
-  { value: "1.725", label: "Alta — 4+ días de gym y trabajo activo" },
+  { value: "1.375", label: "Ligera — semanas 1–2 del plan (sesiones cortas)" },
+  { value: "1.55", label: "Moderada — el plan completo: 4 días de gym" },
+  { value: "1.725", label: "Alta — 5+ días de gym o trabajo físico" },
   { value: "1.2", label: "Sedentaria — sin entrenar (tu punto de partida)" },
 ];
 
@@ -34,7 +34,7 @@ export function MacroCalculator() {
   const [age, setAge] = useState("37");
   const [weight, setWeight] = useState("76.4");
   const [height, setHeight] = useState("175");
-  const [activity, setActivity] = useState("1.375");
+  const [activity, setActivity] = useState("1.55");
   const [goal, setGoal] = useState<Goal>("maintain");
 
   const result = useMemo(() => {

@@ -16,9 +16,9 @@ export default function Home() {
           Tu regreso al entrenamiento
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Llevas unos dos meses sin entrenar: la buena noticia es que la fuerza y el músculo vuelven mucho más
-          rápido de lo que se fueron. Este plan te lleva de cero a un ritmo normal de entrenamiento en 4 semanas,
-          con la dieta ajustada a tus datos. Empieza por la calculadora.
+          Dos años de experiencia y dos meses de pausa: la fuerza vuelve rápido, pero hay que dársela por
+          dosis. Rutina torso/pierna de 4 días en gimnasio con progresión semanal de carga, y una dieta
+          resuelta con dos sesiones de batch cooking a la semana. Empieza por la calculadora.
         </p>
       </header>
 
