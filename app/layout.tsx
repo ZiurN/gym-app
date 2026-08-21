@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -16,6 +16,15 @@ export const metadata: Metadata = {
   title: "Mi Regreso al Gym — Plan de entrenamiento y nutrición",
   description:
     "Plan progresivo de 4 semanas para retomar el entrenamiento después de una pausa, con calculadora de calorías y macros y guía de nutrición.",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Regreso al Gym",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1f8a56",
 };
 
 export default function RootLayout({
