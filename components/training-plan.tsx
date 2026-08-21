@@ -71,6 +71,7 @@ export function TrainingPlan() {
                     <th className="pb-2 font-medium">Ejercicio</th>
                     <th className="pb-2 pl-2 font-medium">Series objetivo</th>
                     <th className="pb-2 pl-2 font-medium">Reps</th>
+                    <th className="pb-2 pl-2 font-medium">Descanso</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -84,10 +85,15 @@ export function TrainingPlan() {
                       </td>
                       <td className="py-2 pl-2 whitespace-nowrap">{ex.sets}</td>
                       <td className="py-2 pl-2 whitespace-nowrap">{ex.reps}</td>
+                      <td className="py-2 pl-2 whitespace-nowrap text-muted-foreground">{ex.rest}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Regla general: 2–3 min en los básicos, 60–90 s en accesorios. El descanso corto no hace mejor
+                el entrenamiento, solo peor la siguiente serie.
+              </p>
             </CardContent>
           </Card>
         ))}

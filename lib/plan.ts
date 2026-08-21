@@ -2,6 +2,7 @@ export type Exercise = {
   name: string;
   sets: string;
   reps: string;
+  rest: string;
   note?: string;
 };
 
@@ -19,44 +20,44 @@ export const trainingSplit: TrainingDay[] = [
     title: "Día 1 (lunes) — Torso A",
     focus: "Empuje y tracción horizontales, énfasis en fuerza",
     exercises: [
-      { name: "Press de banca con barra", sets: "4", reps: "5–8" },
-      { name: "Remo con barra", sets: "4", reps: "6–10", note: "Torso fijo; si la lumbar protesta, remo en máquina o con apoyo al pecho." },
-      { name: "Press militar de pie o sentado", sets: "3", reps: "8–10" },
-      { name: "Jalón al pecho agarre neutro", sets: "3", reps: "10–12" },
-      { name: "Curl de bíceps con barra + tríceps en polea", sets: "3 + 3", reps: "10–12" },
+      { name: "Press de banca con barra", sets: "4", reps: "5–8", rest: "2–3 min" },
+      { name: "Remo con barra", sets: "4", reps: "6–10", rest: "2–3 min", note: "Torso fijo; si la lumbar protesta, remo en máquina o con apoyo al pecho." },
+      { name: "Press militar de pie o sentado", sets: "3", reps: "8–10", rest: "2 min" },
+      { name: "Jalón al pecho agarre neutro", sets: "3", reps: "10–12", rest: "90 s" },
+      { name: "Curl de bíceps con barra + tríceps en polea", sets: "3 + 3", reps: "10–12", rest: "60–90 s" },
     ],
   },
   {
     title: "Día 2 (martes) — Pierna A",
     focus: "Rodilla dominante",
     exercises: [
-      { name: "Sentadilla con barra", sets: "4", reps: "5–8", note: "La primera semana baja más el peso aquí que en ningún otro sitio: las agujetas de sentadilla son las peores." },
-      { name: "Prensa de piernas", sets: "3", reps: "8–12" },
-      { name: "Curl femoral tumbado o sentado", sets: "3", reps: "10–12" },
-      { name: "Elevación de gemelos de pie", sets: "4", reps: "10–15" },
-      { name: "Plancha con peso", sets: "3", reps: "30–45 s" },
+      { name: "Sentadilla con barra", sets: "4", reps: "5–8", rest: "2–3 min", note: "La primera semana baja más el peso aquí que en ningún otro sitio: las agujetas de sentadilla son las peores." },
+      { name: "Prensa de piernas", sets: "3", reps: "8–12", rest: "2 min" },
+      { name: "Curl femoral tumbado o sentado", sets: "3", reps: "10–12", rest: "90 s" },
+      { name: "Elevación de gemelos de pie", sets: "4", reps: "10–15", rest: "60–90 s" },
+      { name: "Plancha con peso", sets: "3", reps: "30–45 s", rest: "60 s" },
     ],
   },
   {
     title: "Día 3 (jueves) — Torso B",
     focus: "Empuje y tracción con énfasis vertical, hipertrofia",
     exercises: [
-      { name: "Press inclinado con mancuernas", sets: "4", reps: "6–10" },
-      { name: "Dominadas (lastradas cuando toque) o jalón", sets: "4", reps: "6–10" },
-      { name: "Press de hombros con mancuernas", sets: "3", reps: "8–12" },
-      { name: "Remo en polea baja", sets: "3", reps: "10–12" },
-      { name: "Elevaciones laterales + face pull", sets: "3 + 3", reps: "12–15", note: "El face pull es tu seguro de hombros: no lo saltes." },
+      { name: "Press inclinado con mancuernas", sets: "4", reps: "6–10", rest: "2–3 min" },
+      { name: "Dominadas (lastradas cuando toque) o jalón", sets: "4", reps: "6–10", rest: "2–3 min" },
+      { name: "Press de hombros con mancuernas", sets: "3", reps: "8–12", rest: "2 min" },
+      { name: "Remo en polea baja", sets: "3", reps: "10–12", rest: "90 s" },
+      { name: "Elevaciones laterales + face pull", sets: "3 + 3", reps: "12–15", rest: "60 s", note: "El face pull es tu seguro de hombros: no lo saltes." },
     ],
   },
   {
     title: "Día 4 (viernes) — Pierna B",
     focus: "Cadera dominante",
     exercises: [
-      { name: "Peso muerto rumano con barra", sets: "4", reps: "6–8" },
-      { name: "Empuje de cadera (hip thrust)", sets: "3", reps: "8–10" },
-      { name: "Sentadilla búlgara con mancuernas", sets: "3", reps: "8–10 por pierna" },
-      { name: "Extensión de cuádriceps", sets: "3", reps: "12–15" },
-      { name: "Gemelos sentado + crunch en polea", sets: "3 + 3", reps: "12–15" },
+      { name: "Peso muerto rumano con barra", sets: "4", reps: "6–8", rest: "2–3 min" },
+      { name: "Empuje de cadera (hip thrust)", sets: "3", reps: "8–10", rest: "2 min" },
+      { name: "Sentadilla búlgara con mancuernas", sets: "3", reps: "8–10 por pierna", rest: "90 s entre piernas" },
+      { name: "Extensión de cuádriceps", sets: "3", reps: "12–15", rest: "60–90 s" },
+      { name: "Gemelos sentado + crunch en polea", sets: "3 + 3", reps: "12–15", rest: "60 s" },
     ],
   },
 ];
