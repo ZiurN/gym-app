@@ -35,7 +35,7 @@ export const trainingSplit: TrainingDay[] = [
       { name: "Prensa de piernas", sets: "3", reps: "8–12", rest: "2 min" },
       { name: "Curl femoral tumbado o sentado", sets: "3", reps: "10–12", rest: "90 s" },
       { name: "Elevación de gemelos de pie", sets: "4", reps: "10–15", rest: "60–90 s" },
-      { name: "Plancha con peso", sets: "3", reps: "30–45 s", rest: "60 s" },
+      { name: "Pallof press en polea", sets: "3", reps: "10–12 por lado", rest: "60 s", note: "Polea a altura del pecho; resistes la rotación al extender los brazos." },
     ],
   },
   {
