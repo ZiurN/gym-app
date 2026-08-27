@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { AuthHeader } from "@/components/auth/auth-header";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,7 +38,17 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        <div className="border-b bg-background/80 backdrop-blur">
+          <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+            <a href="/" className="text-sm font-semibold tracking-tight">
+              Mi Regreso al Gym
+            </a>
+            <AuthHeader />
+          </div>
+        </div>
+        {children}
+      </body>
     </html>
   );
 }
