@@ -7,7 +7,7 @@ import { Dumbbell, Calculator, Apple } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6">
+    <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
       <header className="mb-10">
         <Badge variant="secondary" className="mb-3">
           Plan de reincorporación · 4 semanas

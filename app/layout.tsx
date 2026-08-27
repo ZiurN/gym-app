@@ -36,9 +36,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-      <body className="flex min-h-full flex-col font-sans">
+      <body className="min-h-dvh font-sans">
         <div className="border-b bg-background/80 backdrop-blur">
           <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
             <a href="/" className="text-sm font-semibold tracking-tight">
