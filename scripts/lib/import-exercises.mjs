@@ -71,9 +71,16 @@ export function slugify(text) {
     .replace(/^-|-$/g, "");
 }
 
-/** The dataset stores names in lower case. */
+/**
+ * The dataset stores names in lower case, and a few carry a stray Cyrillic
+ * letter before the degree sign ("45в°").
+ */
 export function displayName(name) {
-  const text = name.trim().replace(/\s+/g, " ").replace(/\bez\b/g, "EZ");
+  const text = name
+    .trim()
+    .replace(/\u0432°/g, "°")
+    .replace(/\s+/g, " ")
+    .replace(/\bez\b/g, "EZ");
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
@@ -105,9 +112,15 @@ function need(map, value, kind, record) {
  * @param previous  the catalog generated last time; an exercise keeps the slug
  *                  it already has (matched by source id), so URLs and history
  *                  survive an upstream rename
+ * @param supplement  exercises of our own that the dataset lacks, already in
+ *                  catalog terms (see data/exercise-supplement.json); they
+ *                  follow the dataset's entries
  * @returns the catalog entries and the English steps keyed by slug
  */
-export function buildCatalog(records, { previous = [], overrides = {} } = {}) {
+export function buildCatalog(
+  records,
+  { previous = [], overrides = {}, supplement = [] } = {},
+) {
   const keptSlugs = new Map(
     previous.filter((e) => e.sourceId).map((e) => [e.sourceId, e.slug]),
   );
@@ -140,6 +153,44 @@ export function buildCatalog(records, { previous = [], overrides = {} } = {}) {
       targetMuscle: record.target,
       secondaryMuscles: [...new Set(record.secondary_muscles ?? [])],
       equipmentDetail: record.equipment,
+    });
+    instructions[slug] = steps;
+  }
+
+  const groups = {
+    primaryMuscle: new Set(Object.values(TARGET_TO_GROUP)),
+    equipment: new Set(Object.values(EQUIPMENT_TO_GROUP)),
+    modality: new Set(["load_reps", "time", "per_side"]),
+  };
+  const sourceIds = new Set(catalog.map((entry) => entry.sourceId));
+  for (const extra of supplement) {
+    for (const [field, allowed] of Object.entries(groups)) {
+      if (!allowed.has(extra[field])) {
+        throw new Error(`Supplement exercise ${extra.id}: unknown ${field} "${extra[field]}".`);
+      }
+    }
+    const steps = (extra.steps ?? []).map((step) => String(step).trim()).filter(Boolean);
+    if (!extra.id || sourceIds.has(extra.id) || !extra.name || steps.length === 0) {
+      throw new Error(`Supplement exercise ${extra.id ?? "(no id)"} needs a unique id, a name and steps.`);
+    }
+    sourceIds.add(extra.id);
+
+    let slug = keptSlugs.get(extra.id);
+    if (!slug) {
+      slug = slugify(extra.name);
+      if (taken.has(slug)) slug = `${slug}-${slugify(extra.id)}`;
+      taken.add(slug);
+    }
+    catalog.push({
+      sourceId: extra.id,
+      slug,
+      name: displayName(extra.name),
+      modality: extra.modality,
+      primaryMuscle: extra.primaryMuscle,
+      equipment: extra.equipment,
+      targetMuscle: extra.targetMuscle,
+      secondaryMuscles: [...new Set(extra.secondaryMuscles ?? [])],
+      equipmentDetail: extra.equipmentDetail,
     });
     instructions[slug] = steps;
   }

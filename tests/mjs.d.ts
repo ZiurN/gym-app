@@ -46,7 +46,11 @@ declare module "@/scripts/lib/import-exercises.mjs" {
   ): string;
   export function buildCatalog(
     records: SourceRecord[],
-    options?: { previous?: { sourceId?: string; slug: string }[]; overrides?: Record<string, string> },
+    options?: {
+      previous?: { sourceId?: string; slug: string }[];
+      overrides?: Record<string, string>;
+      supplement?: Record<string, unknown>[];
+    },
   ): { catalog: Required<SeedExercise>[]; instructions: Record<string, string[]> };
   export function serializeCatalog(catalog: unknown[]): string;
   export function serializeInstructions(instructions: Record<string, string[]>): string;

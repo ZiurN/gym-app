@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import catalog from "@/data/exercise-catalog.json";
 import instructions from "@/data/exercise-instructions.en.json";
 import overrides from "@/data/exercise-modality-overrides.json";
+import supplement from "@/data/exercise-supplement.json";
 import { EQUIPMENT, MODALITIES, MUSCLE_GROUPS } from "@/lib/catalog/types";
 import {
   buildCatalog,
@@ -15,8 +16,11 @@ import { createPg, execOf, insertUser } from "./helpers/db";
 const steps: Record<string, string[]> = instructions;
 
 describe("catalog seed files", () => {
-  it("hold the 1,324 imported exercises with unique slugs and source ids", () => {
-    expect(catalog).toHaveLength(1324);
+  it("hold the 1,324 imported exercises and our own additions, with unique slugs and source ids", () => {
+    expect(catalog).toHaveLength(1324 + supplement.length);
+    for (const extra of supplement) {
+      expect(catalog.some((e) => e.sourceId === extra.id), extra.id).toBe(true);
+    }
     expect(new Set(catalog.map((e) => e.slug)).size).toBe(catalog.length);
     expect(new Set(catalog.map((e) => e.sourceId)).size).toBe(catalog.length);
   });
@@ -35,11 +39,16 @@ describe("catalog seed files", () => {
     expect(Object.keys(steps)).toHaveLength(catalog.length);
   });
 
+  it("have no stray non-English letters in names", () => {
+    expect(catalog.filter((e) => /[^\x20-\x7e°]/.test(e.name)).map((e) => e.name)).toEqual([]);
+  });
+
   it("match the reviewed number of exercises per logging modality", () => {
     const count = (modality: string) => catalog.filter((e) => e.modality === modality).length;
+    const own = (modality: string) => supplement.filter((e) => e.modality === modality).length;
     // Change these only after reading the affected exercises; see docs/CATALOG.md.
     expect({ load_reps: count("load_reps"), time: count("time"), per_side: count("per_side") })
-      .toEqual({ load_reps: 1067, time: 98, per_side: 159 });
+      .toEqual({ load_reps: 1067 + own("load_reps"), time: 98 + own("time"), per_side: 159 + own("per_side") });
     const sourceIds = new Set(catalog.map((e) => e.sourceId));
     for (const id of Object.keys(overrides)) expect(sourceIds, id).toContain(id);
   });
@@ -114,9 +123,32 @@ describe("import", () => {
     expect(Object.keys(outSteps)).toEqual(["barbell-bench-press"]);
   });
 
+  it("adds our own exercises after the dataset's and checks them", () => {
+    const extra = {
+      id: "custom-hip-thrust",
+      name: "barbell hip thrust",
+      modality: "load_reps",
+      primaryMuscle: "glutes",
+      equipment: "barbell",
+      targetMuscle: "glutes",
+      secondaryMuscles: ["hamstrings"],
+      equipmentDetail: "barbell",
+      steps: ["Sit against a bench.", "Raise your hips."],
+    };
+    const { catalog: out, instructions: outSteps } = buildCatalog([record()], { supplement: [extra] });
+    expect(out.map((e) => e.slug)).toEqual(["barbell-bench-press", "barbell-hip-thrust"]);
+    expect(out[1]).toMatchObject({ sourceId: "custom-hip-thrust", name: "Barbell hip thrust" });
+    expect(outSteps["barbell-hip-thrust"]).toEqual(extra.steps);
+
+    expect(() => buildCatalog([], { supplement: [{ ...extra, equipment: "trampoline" }] })).toThrow(/equipment/);
+    expect(() => buildCatalog([], { supplement: [{ ...extra, steps: [] }] })).toThrow(/steps/);
+    expect(() => buildCatalog([record({ id: "custom-hip-thrust" })], { supplement: [extra] })).toThrow(/unique id/);
+  });
+
   it("writes names in sentence case", () => {
     expect(displayName("ez barbell  spider curl")).toBe("EZ barbell spider curl");
     expect(displayName("3/4 sit-up")).toBe("3/4 sit-up");
+    expect(displayName("sled 45\u0432° leg press")).toBe("Sled 45° leg press");
   });
 
   describe("logging modality", () => {

@@ -24,6 +24,7 @@ const readJson = (url, fallback) =>
 const { catalog, instructions } = buildCatalog(JSON.parse(readFileSync(source, "utf8")), {
   previous: readJson(at("../data/exercise-catalog.json"), []),
   overrides: readJson(at("../data/exercise-modality-overrides.json"), {}),
+  supplement: readJson(at("../data/exercise-supplement.json"), []),
 });
 writeFileSync(at("../data/exercise-catalog.json"), serializeCatalog(catalog));
 writeFileSync(at("../data/exercise-instructions.en.json"), serializeInstructions(instructions));

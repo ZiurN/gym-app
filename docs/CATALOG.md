@@ -24,6 +24,7 @@ Licence texts and caveats are in [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTIC
 | `data/exercise-catalog.json` | One entry per exercise | The import script |
 | `data/exercise-instructions.en.json` | English steps, by slug | The import script |
 | `data/exercise-modality-overrides.json` | Corrections to how an exercise is logged, by source id | Hand |
+| `data/exercise-supplement.json` | Exercises of our own that the dataset lacks | Hand |
 | `data/exercise-photo-map.json` | Source id -> free-exercise-db id | Hand, after review |
 | `public/exercise-photos/<slug>/start.webp`, `end.webp` | The photos | The photo script |
 
@@ -64,6 +65,14 @@ are `load_reps`. When a rule gets one wrong, add its source id to
 `data/exercise-modality-overrides.json`, re-run the import and update the
 counts in `tests/catalog-seed.test.ts`. Sets already logged keep the modality
 they were logged with.
+
+### Add an exercise the dataset lacks
+
+Add an entry to `data/exercise-supplement.json` with a unique `id` starting
+with `custom-`, the name in lower case, `modality`, the two filter groups, the
+specific muscles and equipment, and the steps. Use muscle names the muscle map
+knows (`lib/catalog/muscle-map.ts`). Write the steps yourself: do not copy
+them from a website or book. Then re-run the import, the tests and the seed.
 
 ## Load it into a database
 

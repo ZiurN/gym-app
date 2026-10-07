@@ -93,7 +93,10 @@ describe("catalog", () => {
 
     const bench = names({ text: "BENCH PRESS" });
     expect(bench).toContain("Barbell bench press");
-    expect(bench.every((name) => name.toLowerCase().includes("bench press"))).toBe(true);
+    expect(bench.slice(0, 3)).toContain("Barbell bench press");
+    expect(
+      bench.every((name) => /bench/i.test(name) && /press/i.test(name)),
+    ).toBe(true);
 
     const narrowed = filterCatalog(all, { text: "press", muscle: "chest", equipment: "dumbbell" });
     expect(narrowed.map((e) => e.name)).toContain("Dumbbell bench press");

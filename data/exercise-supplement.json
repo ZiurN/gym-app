@@ -1,0 +1,21 @@
+[
+  {
+    "id": "custom-barbell-hip-thrust",
+    "name": "barbell hip thrust",
+    "modality": "load_reps",
+    "primaryMuscle": "glutes",
+    "equipment": "barbell",
+    "targetMuscle": "glutes",
+    "secondaryMuscles": ["hamstrings", "quadriceps", "core"],
+    "equipmentDetail": "barbell",
+    "steps": [
+      "Sit on the floor with your upper back against the long side of a bench and a loaded barbell across your hips.",
+      "Bend your knees and place your feet flat on the floor, about shoulder-width apart.",
+      "Hold the bar in place with both hands.",
+      "Push through your heels and raise your hips until your torso and thighs form a straight line, with your shoulder blades resting on the bench.",
+      "Pause for a moment at the top.",
+      "Lower your hips back toward the floor under control.",
+      "Repeat for the desired number of repetitions."
+    ]
+  }
+]
