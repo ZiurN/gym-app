@@ -51,9 +51,9 @@ function slotKey(slot: SetSlot) {
 }
 
 function slotLabel(slot: SetSlot) {
-  if (slot.side === "left") return `Serie ${slot.setIndex} · izq`;
-  if (slot.side === "right") return `Serie ${slot.setIndex} · der`;
-  return `Serie ${slot.setIndex}`;
+  if (slot.side === "left") return `Set ${slot.setIndex} · left`;
+  if (slot.side === "right") return `Set ${slot.setIndex} · right`;
+  return `Set ${slot.setIndex}`;
 }
 
 function repGuide(position: SessionPosition): string | null {
@@ -62,7 +62,7 @@ function repGuide(position: SessionPosition): string | null {
     return repMin === repMax ? `${repMin} reps` : `${repMin}–${repMax} reps`;
   }
   if (repMin != null) return `${repMin}+ reps`;
-  if (repMax != null) return `hasta ${repMax} reps`;
+  if (repMax != null) return `up to ${repMax} reps`;
   return null;
 }
 
@@ -149,11 +149,11 @@ export function WorkoutSessionClient({
     const timed = active.exercise.modality === "time";
 
     if (!timed && (load.trim() === "" || !(Number(reps) > 0))) {
-      setError("Indica peso y repeticiones.");
+      setError("Enter weight and reps.");
       return;
     }
     if (timed && !(Number(durationSec) > 0)) {
-      setError("Indica la duración en segundos.");
+      setError("Enter the duration in seconds.");
       return;
     }
 
@@ -193,7 +193,7 @@ export function WorkoutSessionClient({
           seconds == null ? null : { seconds, run: (prev?.run ?? 0) + 1 },
         );
       } catch (e) {
-        setError(e instanceof Error ? e.message : "No se pudo guardar el set.");
+        setError(e instanceof Error ? e.message : "The set could not be saved.");
       }
     });
   };
@@ -201,26 +201,26 @@ export function WorkoutSessionClient({
   const handleFinish = () => {
     startTransition(async () => {
       await completeSessionAction(sessionId);
-      router.push("/entrenar");
+      router.push("/train");
       router.refresh();
     });
   };
 
   const handleLeave = () => {
     if (allDone) {
-      router.push("/entrenar");
+      router.push("/train");
       return;
     }
     if (
       !window.confirm(
-        "¿Descartar este entrenamiento? No se guardará ningún avance.",
+        "Discard this workout? Nothing from it will be saved.",
       )
     ) {
       return;
     }
     startTransition(async () => {
       await abandonSessionAction(sessionId);
-      router.push("/entrenar");
+      router.push("/train");
       router.refresh();
     });
   };
@@ -232,15 +232,15 @@ export function WorkoutSessionClient({
       <div className="mb-4 flex items-center justify-between gap-2">
         <Button type="button" variant="ghost" size="sm" onClick={handleLeave}>
           <ChevronLeft className="mr-1 size-4" />
-          Salir
+          Leave
         </Button>
-        <Badge variant="secondary">En curso</Badge>
+        <Badge variant="secondary">In progress</Badge>
       </div>
 
       <header className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight">{dayTitle}</h1>
         <p className="text-sm text-muted-foreground">
-          Marca cada serie como terminada; el descanso arranca solo.
+          Mark each set as done; the rest timer starts on its own.
         </p>
       </header>
 
@@ -253,15 +253,15 @@ export function WorkoutSessionClient({
       {allDone ? (
         <Card>
           <CardHeader>
-            <CardTitle>¡Listo!</CardTitle>
+            <CardTitle>All done</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-3">
             <p className="text-sm text-muted-foreground">
-              Has registrado todas las series de hoy. Finaliza para guardar el
-              entrenamiento en tu historial.
+              You logged every set of this day. Finish to save the workout to
+              your history.
             </p>
             <Button onClick={handleFinish} disabled={pending}>
-              Finalizar entrenamiento
+              Finish workout
             </Button>
           </CardContent>
         </Card>
@@ -270,14 +270,14 @@ export function WorkoutSessionClient({
           <CardHeader>
             {nextSlot.superset ? (
               <Badge variant="secondary" className="mb-1 w-fit">
-                Superserie · ronda {nextSlot.superset.round} de{" "}
+                Superset · round {nextSlot.superset.round} of{" "}
                 {nextSlot.superset.rounds}
               </Badge>
             ) : null}
             <CardTitle className="text-lg">{active.exercise.name}</CardTitle>
             <p className="text-sm text-muted-foreground">
-              {slotLabel(nextSlot)} de {active.position.targetSets}
-              {guide ? ` · objetivo ${guide}` : ""}
+              {slotLabel(nextSlot)} of {active.position.targetSets}
+              {guide ? ` · target ${guide}` : ""}
             </p>
             {active.position.note ? (
               <p className="text-sm text-muted-foreground">{active.position.note}</p>
@@ -285,7 +285,7 @@ export function WorkoutSessionClient({
             <ExerciseInfoButton
               slug={active.exercise.slug}
               name={active.exercise.name}
-              text="Cómo se hace"
+              text="How it's done"
               className="w-fit"
             />
             {active.other && !active.fixed ? (
@@ -302,12 +302,12 @@ export function WorkoutSessionClient({
                     }))
                   }
                 >
-                  Cambiar a {active.other.name}
+                  Switch to {active.other.name}
                 </Button>
                 <ExerciseInfoButton
                   slug={active.other.slug}
                   name={active.other.name}
-                  label={`Cómo se hace: ${active.other.name}`}
+                  label={`About ${active.other.name}`}
                 />
               </div>
             ) : null}
@@ -317,7 +317,7 @@ export function WorkoutSessionClient({
               <>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="grid gap-2">
-                    <Label htmlFor="load">Peso</Label>
+                    <Label htmlFor="load">Weight</Label>
                     <Input
                       id="load"
                       inputMode="decimal"
@@ -354,7 +354,7 @@ export function WorkoutSessionClient({
             )}
             {active.exercise.modality === "time" && (
               <div className="grid gap-2">
-                <Label htmlFor="duration">Segundos</Label>
+                <Label htmlFor="duration">Seconds</Label>
                 <Input
                   id="duration"
                   inputMode="numeric"
@@ -369,7 +369,7 @@ export function WorkoutSessionClient({
               onClick={handleTerminado}
               disabled={pending}
             >
-              Terminado
+              Done
             </Button>
           </CardContent>
         </Card>
@@ -377,7 +377,7 @@ export function WorkoutSessionClient({
 
       <section className="grid gap-3">
         <h2 className="text-sm font-semibold text-muted-foreground">
-          Progreso de hoy
+          This workout
         </h2>
         {resolved.map(({ position, exercise }) => (
           <Card key={position.id}>
@@ -387,12 +387,12 @@ export function WorkoutSessionClient({
                   {exercise.name}
                   {position.supersetGroup != null ? (
                     <span className="ml-2 text-xs font-normal text-muted-foreground">
-                      superserie
+                      superset
                     </span>
                   ) : null}
                 </CardTitle>
                 <Button asChild variant="link" size="sm" className="h-auto p-0">
-                  <Link href={`/progreso/${exercise.slug}`}>Gráfico</Link>
+                  <Link href={`/progress/${exercise.slug}`}>Progress</Link>
                 </Button>
               </div>
             </CardHeader>
@@ -423,7 +423,7 @@ export function WorkoutSessionClient({
                             : `${logged.load ?? "—"} ${logged.weightUnit ?? ""} × ${logged.reps ?? "—"}`}
                         </span>
                       ) : (
-                        <span className="text-muted-foreground">Pendiente</span>
+                        <span className="text-muted-foreground">To do</span>
                       )}
                     </div>
                   );
@@ -436,7 +436,7 @@ export function WorkoutSessionClient({
       <div className="mt-6 flex flex-col gap-2">
         {!allDone ? (
           <Button variant="outline" onClick={handleLeave} disabled={pending}>
-            Descartar entrenamiento
+            Discard workout
           </Button>
         ) : null}
       </div>

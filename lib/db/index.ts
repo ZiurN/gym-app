@@ -13,7 +13,7 @@ export function getDb(): Db {
   const url = process.env.DATABASE_URL;
   if (!url) {
     throw new Error(
-      "DATABASE_URL no está definida. Copia .env.example a .env.local y configura Postgres (Neon/Supabase).",
+      "DATABASE_URL is not set. Copy .env.example to .env.local and configure Postgres (Neon/Supabase).",
     );
   }
 

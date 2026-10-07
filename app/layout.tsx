@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Familjen_Grotesk } from "next/font/google";
 import Link from "next/link";
 import { AuthHeader } from "@/components/auth/auth-header";
+import { APP_DESCRIPTION, APP_NAME } from "@/lib/app";
 import "./globals.css";
 
 const familjen = Familjen_Grotesk({
@@ -10,13 +11,12 @@ const familjen = Familjen_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Mi Regreso al Gym — Plan de entrenamiento y nutrición",
-  description:
-    "Plan progresivo de 4 semanas para retomar el entrenamiento después de una pausa, con calculadora de calorías y macros y guía de nutrición.",
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Regreso al Gym",
+    title: APP_NAME,
   },
 };
 
@@ -31,14 +31,14 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="es"
+      lang="en"
       className={`${familjen.variable} antialiased`}
     >
       <body className="min-h-dvh font-sans">
         <div className="border-b bg-background/80 backdrop-blur">
           <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
             <Link href="/" className="text-sm font-semibold tracking-tight">
-              Mi Regreso al Gym
+              {APP_NAME}
             </Link>
             <AuthHeader />
           </div>

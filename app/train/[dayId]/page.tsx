@@ -14,7 +14,7 @@ type PageProps = {
 
 export default async function LiveWorkoutPage({ params }: PageProps) {
   const { dayId } = await params;
-  const user = await requireUser(`/entrenar/${dayId}`);
+  const user = await requireUser(`/train/${dayId}`);
 
   const started = await startOrResumeSession(user.id, dayId, true);
   if (started.status !== "ready") notFound();

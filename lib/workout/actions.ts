@@ -14,7 +14,7 @@ import type { CompletedSetInput } from "@/lib/workout/types";
 async function requireUserId(): Promise<string> {
   const user = await getCurrentUser();
   if (!user) {
-    throw new Error("Debes iniciar sesión para registrar entrenamientos.");
+    throw new Error("Sign in to log workouts.");
   }
   return user.id;
 }
@@ -22,8 +22,8 @@ async function requireUserId(): Promise<string> {
 // A session opening or closing changes what the training and routines
 // screens show (the lock), so both are refreshed.
 function revalidateSession(routineDayId?: string | null) {
-  revalidatePath("/entrenar");
-  if (routineDayId) revalidatePath(`/entrenar/${routineDayId}`);
+  revalidatePath("/train");
+  if (routineDayId) revalidatePath(`/train/${routineDayId}`);
   revalidatePath("/routines", "layout");
 }
 
@@ -40,7 +40,7 @@ export async function completeSetAction(
 ) {
   const userId = await requireUserId();
   const { set, routineDayId } = await completeSetForUser(userId, sessionId, input);
-  revalidatePath(`/entrenar/${routineDayId}`);
+  revalidatePath(`/train/${routineDayId}`);
   return set;
 }
 
@@ -48,7 +48,7 @@ export async function completeSessionAction(sessionId: string) {
   const userId = await requireUserId();
   const { routineDayId } = await completeSessionForUser(userId, sessionId);
   revalidateSession(routineDayId);
-  revalidatePath("/progreso");
+  revalidatePath("/progress");
   return { ok: true };
 }
 
@@ -62,5 +62,5 @@ export async function abandonSessionAction(sessionId: string) {
 export async function deleteSetAction(sessionId: string, setId: string) {
   const userId = await requireUserId();
   const { routineDayId } = await deleteSetForUser(userId, sessionId, setId);
-  if (routineDayId) revalidatePath(`/entrenar/${routineDayId}`);
+  if (routineDayId) revalidatePath(`/train/${routineDayId}`);
 }

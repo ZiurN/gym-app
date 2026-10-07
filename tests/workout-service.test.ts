@@ -247,6 +247,7 @@ describe("history, pre-fill and progress", () => {
 
     const points = await getExerciseProgressPoints(userId, benchRef());
     expect(points.map((p) => [p.value, p.reps, p.unit])).toEqual([[62.5, 6, "kg"]]);
+    expect(points[0].label).toMatch(/^[A-Z][a-z]{2} \d{1,2}$/); // e.g. "Oct 2"
     expect((await getPrefills(userId, [ids["barbell-bench-press"]]))[ids["barbell-bench-press"]])
       .toMatchObject({ load: 62.5, reps: 6 });
 

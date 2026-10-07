@@ -22,6 +22,6 @@ describe("server actions without a signed-in user", () => {
     ["getExerciseDetailsAction", () => catalogActions.getExerciseDetailsAction("barbell-curl")],
   ])("%s is rejected before touching the database", async (_name, call) => {
     // The database mock throws if it is reached, since no test database exists here.
-    await expect(call()).rejects.toThrow(/sign in|iniciar sesión/i);
+    await expect(call()).rejects.toThrow(/sign in/i);
   });
 });

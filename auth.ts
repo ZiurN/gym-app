@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Resend from "next-auth/providers/resend";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { APP_NAME } from "@/lib/app";
 import { getDb } from "@/lib/db";
 import {
   accounts,
@@ -33,7 +34,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
     Resend({
       apiKey: process.env.AUTH_RESEND_KEY,
-      from: process.env.EMAIL_FROM ?? "Mi Regreso al Gym <onboarding@resend.dev>",
+      from: process.env.EMAIL_FROM ?? `${APP_NAME} <onboarding@resend.dev>`,
     }),
   ],
   pages: {

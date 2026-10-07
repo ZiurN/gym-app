@@ -8,34 +8,34 @@ export async function AuthHeader() {
   try {
     session = await auth();
   } catch {
-    // Sin DATABASE_URL / secrets todavía: la guía pública sigue usable.
+    // No DATABASE_URL or secrets yet: the public page still works.
   }
 
   if (!session?.user) {
     return (
       <div className="flex items-center gap-2">
         <Button asChild variant="outline" size="sm">
-          <Link href="/login">Entrar</Link>
+          <Link href="/login">Sign in</Link>
         </Button>
       </div>
     );
   }
 
-  const label = session.user.name ?? session.user.email ?? "Cuenta";
+  const label = session.user.name ?? session.user.email ?? "Account";
 
   return (
     <div className="flex max-w-full items-center gap-2">
       <Button asChild variant="default" size="sm">
-        <Link href="/entrenar">Entrenar</Link>
+        <Link href="/train">Train</Link>
       </Button>
       <Button asChild variant="ghost" size="sm">
-        <Link href="/progreso">Progreso</Link>
+        <Link href="/progress">Progress</Link>
       </Button>
       <Button asChild variant="ghost" size="sm">
-        <Link href="/routines">Rutinas</Link>
+        <Link href="/routines">Routines</Link>
       </Button>
       <Button asChild variant="ghost" size="sm" className="max-w-[12rem] truncate">
-        <Link href="/cuenta" title={label}>
+        <Link href="/account" title={label}>
           {label}
         </Link>
       </Button>
@@ -46,7 +46,7 @@ export async function AuthHeader() {
         }}
       >
         <Button type="submit" variant="outline" size="sm">
-          Salir
+          Sign out
         </Button>
       </form>
     </div>

@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dumbbell } from "lucide-react";
 
 export default async function EntrenarPage() {
-  const user = await requireUser("/entrenar");
+  const user = await requireUser("/train");
   const [inProgress, routine] = await Promise.all([
     getInProgressSession(user.id),
     getActiveRoutine(user.id),
@@ -27,16 +27,16 @@ export default async function EntrenarPage() {
     <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
       <header className="mb-8">
         <Badge variant="secondary" className="mb-3">
-          Registro en vivo
+          Live logging
         </Badge>
         <h1 className="flex items-center gap-2 text-3xl font-bold tracking-tight">
           <Dumbbell className="size-8 text-primary" />
-          Entrenar
+          Train
         </h1>
         <p className="mt-2 max-w-2xl text-muted-foreground">
           {routine
-            ? `Rutina activa: ${routine.name}. Puedes empezar cualquier día; solo cuentan las sesiones completadas.`
-            : "Elige una rutina para empezar a registrar tus entrenamientos."}
+            ? `Active routine: ${routine.name}. You can start any day; only finished workouts are saved.`
+            : "Pick a routine to start logging your workouts."}
         </p>
       </header>
 
@@ -44,16 +44,16 @@ export default async function EntrenarPage() {
         <Card className="mb-6 border-primary/30 bg-primary/5">
           <CardHeader>
             <CardTitle className="text-base">
-              Sesión en curso · {inProgress.dayName}
+              Workout in progress · {inProgress.dayName}
             </CardTitle>
             <CardDescription>
-              Tienes un entrenamiento sin finalizar. Continúa o empieza otro día
-              (se descartará el anterior).
+              You have an unfinished workout. Resume it, or start another day
+              (the unfinished one will be discarded).
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Button asChild>
-              <Link href={`/entrenar/${inProgress.routineDayId}`}>Continuar</Link>
+              <Link href={`/train/${inProgress.routineDayId}`}>Resume</Link>
             </Button>
           </CardContent>
         </Card>
@@ -68,16 +68,16 @@ export default async function EntrenarPage() {
                 <CardHeader>
                   <div className="flex items-start justify-between gap-3">
                     <CardTitle className="text-lg">{day.name}</CardTitle>
-                    {isNext ? <Badge>Siguiente</Badge> : null}
+                    {isNext ? <Badge>Next</Badge> : null}
                   </div>
                   <CardDescription>
                     {day.exercises.length}{" "}
-                    {day.exercises.length === 1 ? "ejercicio" : "ejercicios"}
+                    {day.exercises.length === 1 ? "exercise" : "exercises"}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Button asChild variant={isNext ? "default" : "outline"}>
-                    <Link href={`/entrenar/${day.id}`}>Empezar</Link>
+                    <Link href={`/train/${day.id}`}>Start</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -87,23 +87,23 @@ export default async function EntrenarPage() {
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">No tienes una rutina activa</CardTitle>
+            <CardTitle className="text-lg">No active routine</CardTitle>
             <CardDescription>
-              Crea una rutina con los días y ejercicios que entrenas, o activa
-              una que ya tengas guardada.
+              Create a routine with the days and exercises you train, or
+              activate one you already saved.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Button asChild>
-              <Link href="/routines">Ir a rutinas</Link>
+              <Link href="/routines">Go to routines</Link>
             </Button>
           </CardContent>
         </Card>
       )}
 
       <p className="mt-8 text-sm">
-        <Link href="/progreso" className="text-primary underline-offset-4 hover:underline">
-          Ver progreso por ejercicio
+        <Link href="/progress" className="text-primary underline-offset-4 hover:underline">
+          See progress by exercise
         </Link>
       </p>
     </main>

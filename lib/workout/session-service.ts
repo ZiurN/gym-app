@@ -109,7 +109,7 @@ export async function completeSetForUser(
 ) {
   const session = await getSessionById(userId, sessionId);
   if (!session || session.status !== "in_progress" || !session.routineDayId) {
-    throw new Error("No hay una sesión activa.");
+    throw new Error("There is no workout in progress.");
   }
 
   const [positions, logged] = await Promise.all([
@@ -122,13 +122,13 @@ export async function completeSetForUser(
       p.alternative?.id === input.exerciseId,
   );
   if (!position) {
-    throw new Error("Ejercicio no válido.");
+    throw new Error("That exercise is not part of this workout.");
   }
   const isMain = position.exercise.id === input.exerciseId;
   const exercise = isMain ? position.exercise : position.alternative!;
   const other = isMain ? position.alternative : position.exercise;
   if (other && logged.some((set) => set.exerciseId === other.id)) {
-    throw new Error(`Ya registraste series de ${other.name} en esta sesión.`);
+    throw new Error(`You already logged sets of ${other.name} in this workout.`);
   }
 
   const needsSide = exercise.modality === "per_side";
@@ -138,7 +138,7 @@ export async function completeSetForUser(
     input.setIndex > position.targetSets ||
     needsSide !== (input.side != null)
   ) {
-    throw new Error("Serie no válida.");
+    throw new Error("That set is not valid.");
   }
 
   if (input.weightUnit) {
@@ -182,7 +182,7 @@ export async function completeSetForUser(
         s.setIndex === input.setIndex &&
         (s.side ?? undefined) === input.side,
     );
-  if (!set) throw new Error("No se pudo guardar el set.");
+  if (!set) throw new Error("The set could not be saved.");
 
   return { set, routineDayId: session.routineDayId };
 }
@@ -190,7 +190,7 @@ export async function completeSetForUser(
 export async function completeSessionForUser(userId: string, sessionId: string) {
   const session = await getSessionById(userId, sessionId);
   if (!session || session.status !== "in_progress") {
-    throw new Error("No hay una sesión activa para finalizar.");
+    throw new Error("There is no workout in progress to finish.");
   }
 
   await db
@@ -211,7 +211,7 @@ export async function deleteSetForUser(
 ) {
   const session = await getSessionById(userId, sessionId);
   if (!session || session.status !== "in_progress") {
-    throw new Error("Solo puedes editar sets en una sesión activa.");
+    throw new Error("Sets can only be changed during a workout in progress.");
   }
 
   await db

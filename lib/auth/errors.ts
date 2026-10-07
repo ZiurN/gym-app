@@ -1,19 +1,19 @@
 export const authErrorMessages: Record<string, string> = {
-  Configuration: "Hay un problema de configuración del inicio de sesión. Inténtalo más tarde.",
-  AccessDenied: "Acceso denegado. No se pudo completar el inicio de sesión.",
+  Configuration: "Sign-in is not set up correctly. Try again later.",
+  AccessDenied: "Access denied. Sign-in could not be completed.",
   Verification:
-    "El enlace de acceso no es válido o ya expiró. Solicita uno nuevo desde esta página.",
-  OAuthSignin: "No se pudo iniciar el flujo con el proveedor. Inténtalo de nuevo.",
-  OAuthCallback: "Error al volver del proveedor de acceso. Inténtalo de nuevo.",
-  OAuthCreateAccount: "No se pudo crear la cuenta con ese proveedor.",
-  EmailCreateAccount: "No se pudo crear la cuenta con ese correo.",
-  Callback: "Error en el proceso de inicio de sesión. Inténtalo de nuevo.",
+    "The sign-in link is not valid or has expired. Request a new one from this page.",
+  OAuthSignin: "Could not start sign-in with the provider. Try again.",
+  OAuthCallback: "Something went wrong coming back from the provider. Try again.",
+  OAuthCreateAccount: "Could not create the account with that provider.",
+  EmailCreateAccount: "Could not create the account with that email.",
+  Callback: "Something went wrong during sign-in. Try again.",
   OAuthAccountNotLinked:
-    "Ese correo ya está asociado a otra forma de acceso. Entra con el método que usaste antes.",
-  EmailSignin: "No se pudo enviar el enlace al correo. Revisa la dirección e inténtalo de nuevo.",
-  CredentialsSignin: "No se pudo iniciar sesión. Revisa los datos e inténtalo de nuevo.",
-  SessionRequired: "Debes iniciar sesión para continuar.",
-  Default: "No se pudo iniciar sesión. Inténtalo de nuevo.",
+    "That email is already linked to another sign-in method. Use the one you used before.",
+  EmailSignin: "Could not send the link to that email. Check the address and try again.",
+  CredentialsSignin: "Could not sign in. Check your details and try again.",
+  SessionRequired: "Sign in to continue.",
+  Default: "Could not sign in. Try again.",
 };
 
 export function getAuthErrorMessage(code?: string | string[] | null): string | null {

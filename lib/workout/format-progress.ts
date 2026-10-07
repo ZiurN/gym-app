@@ -1,7 +1,7 @@
 import type { ProgressPoint } from "@/lib/workout/types";
 
 export function formatNumber(value: number): string {
-  return value.toLocaleString("es-ES", { maximumFractionDigits: 1 });
+  return value.toLocaleString("en-US", { maximumFractionDigits: 1 });
 }
 
 export function formatMeasure(value: number, unit: string): string {
@@ -32,10 +32,10 @@ export function formatSetDetail(point: ProgressPoint): string {
   if (point.left || point.right) {
     const parts: string[] = [];
     if (point.left) {
-      parts.push(`izq ${formatNumber(point.left.load)} × ${point.left.reps ?? "—"}`);
+      parts.push(`L ${formatNumber(point.left.load)} × ${point.left.reps ?? "—"}`);
     }
     if (point.right) {
-      parts.push(`der ${formatNumber(point.right.load)} × ${point.right.reps ?? "—"}`);
+      parts.push(`R ${formatNumber(point.right.load)} × ${point.right.reps ?? "—"}`);
     }
     return parts.join(" · ");
   }
@@ -44,5 +44,5 @@ export function formatSetDetail(point: ProgressPoint): string {
 }
 
 export function progressCaption(point: ProgressPoint): string {
-  return point.durationSec != null ? "mejor duración" : "última serie más pesada";
+  return point.durationSec != null ? "longest set" : "heaviest set of the last workout";
 }

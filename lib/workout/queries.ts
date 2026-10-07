@@ -19,7 +19,7 @@ import type {
 type WorkoutSetRow = typeof workoutSets.$inferSelect;
 
 function sessionDateLabel(date: Date) {
-  return date.toLocaleDateString("es-ES", {
+  return date.toLocaleDateString("en-US", {
     day: "numeric",
     month: "short",
   });

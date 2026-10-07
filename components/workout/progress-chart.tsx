@@ -51,7 +51,7 @@ export function ProgressChart({ points }: ProgressChartProps) {
           <Tooltip
             formatter={(value) => [
               formatMeasure(Number(value), unit),
-              unit === "s" ? "Duración" : "Carga",
+              unit === "s" ? "Duration" : "Load",
             ]}
           />
           <Line

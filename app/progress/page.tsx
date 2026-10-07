@@ -5,23 +5,23 @@ import { formatLatest } from "@/lib/workout/format-progress";
 import { getLoggedExercises } from "@/lib/workout/queries";
 
 export default async function ProgresoIndexPage() {
-  const user = await requireUser("/progreso");
+  const user = await requireUser("/progress");
   const logged = await getLoggedExercises(user.id);
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
       <header className="mb-10 max-w-xl">
-        <h1 className="text-3xl font-bold tracking-tight">Progreso</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Progress</h1>
         <p className="mt-2 text-muted-foreground">
-          Solo cuentan las sesiones que terminaste.
+          Only finished workouts count.
         </p>
       </header>
 
       {logged.length === 0 ? (
         <p className="max-w-prose text-muted-foreground">
-          Aún no hay sesiones completadas.{" "}
-          <Link href="/entrenar" className="text-foreground underline underline-offset-4">
-            Empezar un entrenamiento
+          No finished workouts yet.{" "}
+          <Link href="/train" className="text-foreground underline underline-offset-4">
+            Start a workout
           </Link>
         </p>
       ) : (
@@ -32,7 +32,7 @@ export default async function ProgresoIndexPage() {
               className="flex items-center gap-2 border-b border-border last:border-b-0"
             >
               <Link
-                href={`/progreso/${exercise.slug}`}
+                href={`/progress/${exercise.slug}`}
                 className="flex flex-1 items-baseline justify-between gap-4 py-3 text-sm hover:text-foreground"
               >
                 <span>{exercise.name}</span>
@@ -43,7 +43,7 @@ export default async function ProgresoIndexPage() {
               <ExerciseInfoButton
                 slug={exercise.slug}
                 name={exercise.name}
-                label={`Cómo se hace: ${exercise.name}`}
+                label={`About ${exercise.name}`}
                 className="shrink-0"
               />
             </li>

@@ -38,14 +38,14 @@ export function RestTimer({ restSeconds, onDone, onSkip }: RestTimerProps) {
       <div className="mx-auto flex w-full max-w-lg flex-col gap-3">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="text-sm font-medium">Descanso</p>
+            <p className="text-sm font-medium">Rest</p>
             <p className="text-2xl font-bold tabular-nums">
               {minutes}:{seconds.toString().padStart(2, "0")}
             </p>
           </div>
           <div className="flex gap-2">
             <Button type="button" variant="outline" size="sm" onClick={onSkip}>
-              Saltar
+              Skip
             </Button>
             <Button
               type="button"

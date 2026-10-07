@@ -104,7 +104,7 @@ export function ExerciseInfo({
 
       {progressLink ? (
         <p className="text-sm">
-          <Link href={`/progreso/${exercise.slug}`} className="text-primary underline-offset-4 hover:underline">
+          <Link href={`/progress/${exercise.slug}`} className="text-primary underline-offset-4 hover:underline">
             Your progress on this exercise
           </Link>
         </p>

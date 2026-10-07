@@ -1,40 +1,63 @@
-# Mi Regreso al Gym
+# Gym Tracker
 
-Aplicación web con un plan completo para retomar el entrenamiento después de ~2 meses de pausa, con enfoque de nutricionista y entrenador personal:
+A workout tracker: build your own routines from an exercise catalog, log every
+set while you train, and see your progress per exercise. It is a tracking tool
+and gives no training, health or nutrition advice.
 
-- **Calculadora de calorías y macros** — gasto energético con la fórmula Mifflin-St Jeor, ajustado a tu actividad y objetivo (perder grasa, recomposición o ganar músculo), con reparto de proteína, grasas y carbohidratos.
-- **Plan de entrenamiento de 4 días (torso/pierna)** — rutina fija de gimnasio con progresión semanal de carga, series y RPE durante 4 semanas de reincorporación, más calentamiento, día 5 opcional y reglas de recuperación.
-- **Guía de nutrición con batch cooking** — dos sesiones de cocina a la semana que cubren todas las comidas, menús de tuppers para día de entrenamiento y descanso (sin pescado ni marisco), hidratación y qué suplementos merecen la pena.
+"Gym Tracker" is a working name, defined once in `lib/app.ts`.
+
+## What it does
+
+- **Routines:** any number of days, exercises picked from the catalog, targets
+  per exercise, supersets and an optional alternative exercise. One routine is
+  active at a time.
+- **Live workouts:** start a day of the active routine, log sets, and a rest
+  timer runs between them. Only finished workouts are saved.
+- **Progress:** a chart and history per exercise.
+- **Exercise information:** muscles, equipment and how each of the 1,324
+  catalog exercises is performed.
 
 ## Stack
 
-Next.js (App Router) · TypeScript · Tailwind CSS v4 · shadcn/ui
+Next.js (App Router) · TypeScript · Tailwind CSS v4 · shadcn/ui · Postgres
+(Neon) with Drizzle · Auth.js (Google and email link)
 
-## Cómo ejecutarlo
+## Run it locally
+
+1. Copy `.env.example` to `.env.local` and fill it in. `docs/AUTH_SETUP.md`
+   explains the sign-in variables.
+2. Install, create the tables, load the exercise catalog and start:
 
 ```bash
 npm install
-npm run dev -- --port 4780
+npm run db:migrate
+npm run db:seed-catalog
+npm run dev
 ```
 
-Abre [http://localhost:4780](http://localhost:4780).
+Open [http://localhost:3000](http://localhost:3000).
 
-## Cómo tenerla en el celular
+## Commands
 
-La app es una PWA instalable. Los pasos:
+| Command | What it does |
+|---|---|
+| `npm run dev` | Development server |
+| `npm test` | Tests (they run against an in-process Postgres; no database needed) |
+| `npm run lint` | Lint |
+| `npm run build` | Production build |
+| `npm run db:migrate` | Apply database migrations |
+| `npm run db:seed-catalog` | Load or update the exercise catalog |
+| `npm run db:seed-workouts` | Dev only: a sample routine and finished workouts for the first user |
+| `npm run db:reset-workouts` | Dev only: delete logged workouts |
 
-1. **Publícala gratis en Vercel** (recomendado para Next.js):
-   - Sube este repositorio a GitHub (o conéctalo desde tu cuenta).
-   - Entra en [vercel.com](https://vercel.com), crea una cuenta gratuita e importa el repositorio. Vercel detecta Next.js y despliega solo; obtienes una URL tipo `mi-regreso-al-gym.vercel.app`.
-   - Alternativa sin GitHub: desde la carpeta del proyecto ejecuta `npx vercel` y sigue los pasos.
-2. **Abre la URL en el celular e instálala**:
-   - **Android (Chrome):** menú ⋮ → "Añadir a pantalla de inicio" o "Instalar aplicación".
-   - **iPhone (Safari):** botón Compartir → "Añadir a pantalla de inicio".
+## Exercise catalog and third-party data
 
-Queda con su propio icono y se abre a pantalla completa, como una app nativa.
+The catalog, its sources and how to regenerate it are described in
+[`docs/CATALOG.md`](docs/CATALOG.md). Licences of the imported data are in
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
-Para probar rápido en el celular sin publicar: ejecuta `npm run dev -- --port 4780 --hostname 0.0.0.0` en tu computadora y abre `http://IP-DE-TU-PC:4780` desde el celular conectado al mismo WiFi.
+## Install it on a phone
 
-## Nota
-
-El contenido es orientativo y no sustituye la valoración de un profesional sanitario.
+The app is an installable web app. Deploy it somewhere with HTTPS (for example
+Vercel), open the address on the phone, and use the browser's "Add to Home
+Screen".

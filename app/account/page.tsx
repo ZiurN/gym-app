@@ -10,41 +10,35 @@ export default async function AccountPage() {
 
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6">
-      <div className="mb-6 text-sm">
-        <Link href="/" className="text-muted-foreground hover:text-foreground">
-          ← Volver al plan
-        </Link>
-      </div>
-
       <Card className="max-w-lg">
         <CardHeader>
           <Badge variant="secondary" className="mb-2 w-fit">
-            Área personal
+            Your account
           </Badge>
-          <CardTitle>Tu cuenta</CardTitle>
+          <CardTitle>Account</CardTitle>
           <CardDescription>
-            Registra tus entrenamientos en vivo y consulta tu progreso.
+            The account your routines and workouts are saved to.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 text-sm">
           <div className="flex flex-wrap gap-2">
             <Button asChild>
-              <Link href="/entrenar">Ir a entrenar</Link>
+              <Link href="/train">Train</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href="/progreso">Ver progreso</Link>
+              <Link href="/progress">Progress</Link>
             </Button>
           </div>
           <div>
-            <p className="text-muted-foreground">Nombre</p>
+            <p className="text-muted-foreground">Name</p>
             <p className="font-medium">{user.name ?? "—"}</p>
           </div>
           <div>
-            <p className="text-muted-foreground">Correo</p>
+            <p className="text-muted-foreground">Email</p>
             <p className="font-medium">{user.email ?? "—"}</p>
           </div>
           <div>
-            <p className="text-muted-foreground">ID de usuario (estable)</p>
+            <p className="text-muted-foreground">User ID</p>
             <p className="break-all font-mono text-xs">{user.id}</p>
           </div>
           <form
@@ -54,7 +48,7 @@ export default async function AccountPage() {
             }}
           >
             <Button type="submit" variant="outline">
-              Cerrar sesión
+              Sign out
             </Button>
           </form>
         </CardContent>

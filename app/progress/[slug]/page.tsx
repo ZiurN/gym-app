@@ -21,7 +21,7 @@ type PageProps = {
 
 export default async function ExerciseProgressPage({ params }: PageProps) {
   const { slug } = await params;
-  const user = await requireUser(`/progreso/${slug}`);
+  const user = await requireUser(`/progress/${slug}`);
   const exercise = await getExerciseBySlug(slug);
   if (!exercise) notFound();
 
@@ -32,8 +32,8 @@ export default async function ExerciseProgressPage({ params }: PageProps) {
   return (
     <main className="mx-auto w-full max-w-xl px-4 py-10 sm:px-6">
       <div className="mb-8 text-sm">
-        <Link href="/progreso" className="text-muted-foreground hover:text-foreground">
-          Progreso
+        <Link href="/progress" className="text-muted-foreground hover:text-foreground">
+          Progress
         </Link>
       </div>
 
@@ -41,14 +41,14 @@ export default async function ExerciseProgressPage({ params }: PageProps) {
       <ExerciseInfoButton
         slug={exercise.slug}
         name={exercise.name}
-        text="Cómo se hace este ejercicio"
+        text="How this exercise is done"
       />
 
       {last == null ? (
         <p className="mt-6 max-w-prose text-muted-foreground">
-          Aún no hay sesiones completadas de {exercise.name}.{" "}
-          <Link href="/entrenar" className="text-foreground underline underline-offset-4">
-            Empezar un entrenamiento
+          No finished workouts with {exercise.name} yet.{" "}
+          <Link href="/train" className="text-foreground underline underline-offset-4">
+            Start a workout
           </Link>
         </p>
       ) : (
@@ -77,7 +77,7 @@ export default async function ExerciseProgressPage({ params }: PageProps) {
 
           {points.length === 1 ? (
             <p className="mt-8 text-muted-foreground">
-              Con otra sesión completada verás la tendencia.
+              Finish one more workout to see the trend.
             </p>
           ) : (
             <div className="mt-8">

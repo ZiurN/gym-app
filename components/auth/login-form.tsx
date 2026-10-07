@@ -25,7 +25,7 @@ export function LoginForm({ callbackUrl, errorMessage }: Props) {
     try {
       await signIn("google", { callbackUrl });
     } catch {
-      setLocalError("No se pudo iniciar el acceso con Google.");
+      setLocalError("Could not start sign-in with Google.");
       setPending(null);
     }
   }
@@ -34,7 +34,7 @@ export function LoginForm({ callbackUrl, errorMessage }: Props) {
     e.preventDefault();
     setLocalError(null);
     if (!email.trim()) {
-      setLocalError("Escribe tu correo electrónico.");
+      setLocalError("Enter your email address.");
       return;
     }
     setPending("email");
@@ -46,7 +46,7 @@ export function LoginForm({ callbackUrl, errorMessage }: Props) {
       });
       if (result?.error) {
         setLocalError(
-          "No se pudo enviar el enlace. Revisa el correo o prueba con Google.",
+          "Could not send the link. Check the address or try Google.",
         );
         setPending(null);
         return;
@@ -54,7 +54,7 @@ export function LoginForm({ callbackUrl, errorMessage }: Props) {
       setEmailSent(true);
       setPending(null);
     } catch {
-      setLocalError("No se pudo enviar el enlace. Inténtalo de nuevo.");
+      setLocalError("Could not send the link. Try again.");
       setPending(null);
     }
   }
@@ -63,10 +63,10 @@ export function LoginForm({ callbackUrl, errorMessage }: Props) {
     return (
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Revisa tu correo</CardTitle>
+          <CardTitle>Check your email</CardTitle>
           <CardDescription>
-            Te enviamos un enlace de acceso a <strong>{email}</strong>. Ábrelo en este
-            mismo dispositivo. El enlace caduca en poco tiempo.
+            We sent a sign-in link to <strong>{email}</strong>. Open it on this same
+            device. The link expires soon.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -79,7 +79,7 @@ export function LoginForm({ callbackUrl, errorMessage }: Props) {
               setPending(null);
             }}
           >
-            Usar otro correo
+            Use another email
           </Button>
         </CardContent>
       </Card>
@@ -91,10 +91,10 @@ export function LoginForm({ callbackUrl, errorMessage }: Props) {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle>Iniciar sesión</CardTitle>
+        <CardTitle>Sign in</CardTitle>
         <CardDescription>
-          Entra con Google o con un enlace mágico a tu correo. Así podrás guardar tu
-          progreso en la nube.
+          Use Google or a sign-in link sent to your email. Your routines and
+          workouts are saved to your account.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
@@ -114,24 +114,24 @@ export function LoginForm({ callbackUrl, errorMessage }: Props) {
           disabled={pending !== null}
           onClick={handleGoogle}
         >
-          {pending === "google" ? "Conectando…" : "Continuar con Google"}
+          {pending === "google" ? "Connecting…" : "Continue with Google"}
         </Button>
 
         <div className="flex items-center gap-3">
           <Separator className="flex-1" />
-          <span className="text-xs text-muted-foreground">o con correo</span>
+          <span className="text-xs text-muted-foreground">or with email</span>
           <Separator className="flex-1" />
         </div>
 
         <form onSubmit={handleEmail} className="grid gap-3">
           <div className="grid gap-2">
-            <Label htmlFor="email">Correo electrónico</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
               inputMode="email"
               autoComplete="email"
-              placeholder="tu@email.com"
+              placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={pending !== null}
@@ -139,7 +139,7 @@ export function LoginForm({ callbackUrl, errorMessage }: Props) {
             />
           </div>
           <Button type="submit" variant="secondary" className="w-full" disabled={pending !== null}>
-            {pending === "email" ? "Enviando enlace…" : "Enviarme enlace de acceso"}
+            {pending === "email" ? "Sending link…" : "Email me a sign-in link"}
           </Button>
         </form>
       </CardContent>

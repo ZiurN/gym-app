@@ -19,7 +19,7 @@ async function requireUserId(): Promise<string> {
 
 function revalidateRoutines() {
   revalidatePath("/routines", "layout");
-  revalidatePath("/entrenar");
+  revalidatePath("/train");
 }
 
 export async function createRoutineAction(

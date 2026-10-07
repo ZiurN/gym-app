@@ -163,7 +163,7 @@ async function seed(email) {
     }
   }
   console.log(`Seeded routine "${ROUTINE_NAME}" and ${sessionCount} finished sessions for ${user.email}.`);
-  console.log("Try: /entrenar, /routines and /progreso/barbell-bench-press");
+  console.log("Try: /train, /routines and /progress/barbell-bench-press");
 }
 
 const command = process.argv[2];

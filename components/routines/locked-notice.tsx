@@ -61,7 +61,7 @@ export function LockedNotice({ workout }: { workout: OpenWorkout }) {
         <div className="flex flex-wrap gap-2">
           {workout.routineDayId ? (
             <Button asChild>
-              <Link href={`/entrenar/${workout.routineDayId}`}>Resume workout</Link>
+              <Link href={`/train/${workout.routineDayId}`}>Resume workout</Link>
             </Button>
           ) : null}
           <Button

@@ -14,7 +14,7 @@ export async function getCurrentUser() {
 }
 
 /** Use in protected server pages/layouts. */
-export async function requireUser(callbackPath = "/cuenta") {
+export async function requireUser(callbackPath = "/account") {
   const user = await getCurrentUser();
   if (!user) {
     redirect(`/login?callbackUrl=${encodeURIComponent(callbackPath)}`);

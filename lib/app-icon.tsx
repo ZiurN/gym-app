@@ -1,4 +1,4 @@
-// Icono de la app generado con next/og para favicon, apple-touch-icon y PWA.
+// App icon generated with next/og for the favicon, apple-touch-icon and PWA.
 export function AppIcon({ size }: { size: number }) {
   return (
     <div
