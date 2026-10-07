@@ -1,0 +1,124 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Builder.dc.html": {
+      "h": 1400,
+      "title": "Routine builder",
+      "w": 390,
+      "x": 940,
+      "y": 0
+    },
+    "ExerciseInfo.dc.html": {
+      "h": 844,
+      "title": "Exercise information, phone",
+      "w": 390,
+      "x": 1410,
+      "y": 1820
+    },
+    "ExerciseInfoWide.dc.html": {
+      "h": 800,
+      "title": "Exercise information, wide screen",
+      "w": 1280,
+      "x": 1880,
+      "y": 1820
+    },
+    "Locked.dc.html": {
+      "h": 844,
+      "title": "Routines locked",
+      "w": 390,
+      "x": 1880,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 844,
+      "title": "Train",
+      "w": 390,
+      "x": 0,
+      "y": 1820
+    },
+    "Picker.dc.html": {
+      "h": 844,
+      "title": "Exercise picker",
+      "w": 390,
+      "x": 1410,
+      "y": 0
+    },
+    "Progress.dc.html": {
+      "h": 844,
+      "title": "Progress",
+      "w": 390,
+      "x": 940,
+      "y": 1820
+    },
+    "Routines.dc.html": {
+      "h": 844,
+      "title": "Routines",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "Session.dc.html": {
+      "h": 844,
+      "title": "Live session",
+      "w": 390,
+      "x": 470,
+      "y": 1820
+    },
+    "Welcome.dc.html": {
+      "h": 844,
+      "title": "New user",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "MuscleMap.dc.html": {
+      "h": 660,
+      "title": "Muscle map",
+      "w": 1280,
+      "x": 3240,
+      "y": 1820
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-06T12:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "setup": {
+      "kind": "title1",
+      "maxW": 2270,
+      "text": "Set up a routine",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "train": {
+      "kind": "title1",
+      "maxW": 4520,
+      "text": "Train and track",
+      "w": 240,
+      "x": 0,
+      "y": 1520
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Session.dc.html",
+    "Progress.dc.html",
+    "Welcome.dc.html",
+    "Routines.dc.html",
+    "Builder.dc.html",
+    "Picker.dc.html",
+    "Locked.dc.html",
+    "ExerciseInfo.dc.html",
+    "ExerciseInfoWide.dc.html",
+    "MuscleMap.dc.html"
+  ],
+  "pages": [],
+  "title": "Gym Tracker Screens"
+}

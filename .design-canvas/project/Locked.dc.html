@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Routines locked during a workout</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#0071bc}a:hover{color:#00548c}
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: #f5f7f9; color: #0b0f14; font-family: 'Familjen Grotesk', system-ui, sans-serif; display: flex; flex-direction: column">
+  <header style="display: flex; align-items: center; justify-content: space-between; padding: 24px 20px 12px">
+    <h1 style="margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -0.02em">Routines</h1>
+    <div style="width: 44px; height: 44px; border-radius: 50%; background: #e9edf1; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600">JR</div>
+  </header>
+
+  <div aria-hidden="true" style="flex: 1; padding: 0 20px; display: flex; flex-direction: column; gap: 12px">
+    <div style="border: 2px solid #0071bc; border-radius: 12px; background: #ffffff; padding: 16px; display: flex; flex-direction: column; gap: 4px">
+      <div style="font-size: 20px; font-weight: 700">Upper/Lower</div>
+      <div style="font-size: 14px; color: #55606b">4 days · 22 exercises · Active</div>
+    </div>
+    <div style="border: 1px solid #dfe4e9; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px">
+      <div style="font-size: 20px; font-weight: 700">Push Pull Legs</div>
+      <div style="font-size: 14px; color: #55606b">3 days · 16 exercises</div>
+    </div>
+    <div style="border: 1px solid #dfe4e9; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px">
+      <div style="font-size: 20px; font-weight: 700">Home, dumbbells only</div>
+      <div style="font-size: 14px; color: #55606b">2 days · 1 day has no exercises yet</div>
+    </div>
+  </div>
+
+  <div style="position: absolute; inset: 0; background: rgba(11, 15, 20, 0.55)"></div>
+
+  <div role="dialog" aria-modal="true" aria-labelledby="locked-title" style="position: absolute; left: 0; right: 0; bottom: 0; background: #f5f7f9; border-radius: 20px 20px 0 0; padding: 24px 20px 28px; display: flex; flex-direction: column; gap: 18px">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <div style="width: 48px; height: 48px; flex: none; border-radius: 50%; background: #e9edf1; display: flex; align-items: center; justify-content: center">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11V8a5 5 0 0110 0v3M6 11h12v9H6z"></path></svg>
+      </div>
+      <h2 id="locked-title" style="margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.01em">Workout in progress</h2>
+    </div>
+    <p style="margin: 0; font-size: 16px; line-height: 1.45; color: #45505a">Routines can't be changed while a workout is open. Finish or discard it first.</p>
+
+    <div style="border: 1px solid #dfe4e9; border-radius: 12px; background: #ffffff; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+      <div style="font-size: 17px; font-weight: 700">Upper B</div>
+      <div style="font-size: 14px; color: #55606b">Started Oct 3 at 18:05 · 13 of 19 sets logged</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <a href="Session.dc.html" style="min-height: 56px; border-radius: 10px; background: #0071bc; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700; text-decoration: none">Resume workout</a>
+      <button type="button" style="min-height: 52px; border: 1px solid #bfc7cf; border-radius: 10px; background: transparent; font: inherit; font-size: 16px; font-weight: 600; color: #0b0f14">Finish and save</button>
+      <button type="button" style="min-height: 52px; border: 0; border-radius: 10px; background: transparent; font: inherit; font-size: 16px; font-weight: 600; color: #8c3a32">Discard workout</button>
+    </div>
+    <p style="margin: 0; font-size: 13px; line-height: 1.4; color: #55606b; text-align: center">Discarding deletes the 13 sets logged in this workout.</p>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

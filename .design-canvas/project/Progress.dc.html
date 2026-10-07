@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Progress</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#0071bc}a:hover{color:#00548c}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #f5f7f9; color: #0b0f14; font-family: 'Familjen Grotesk', system-ui, sans-serif; display: flex; flex-direction: column">
+  <header style="display: flex; align-items: center; justify-content: space-between; padding: 24px 20px 10px">
+    <h1 style="margin: 0; font-size: 30px; font-weight: 700; letter-spacing: -0.02em">Progress</h1>
+    <a href="#account" aria-label="Account" style="width: 44px; height: 44px; border-radius: 50%; background: #e9edf1; color: #0b0f14; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; text-decoration: none">JR</a>
+  </header>
+
+  <main style="flex: 1; padding: 0 20px; display: flex; flex-direction: column; gap: 12px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="exercise" style="font-size: 14px; font-weight: 600">Exercise</label>
+      <select id="exercise" style="height: 48px; padding: 0 12px; border: 1px solid #bfc7cf; border-radius: 10px; background: #ffffff; font: inherit; font-size: 16px; font-weight: 600; color: #0b0f14">
+        <option>Barbell bench press</option>
+        <option>Barbell row</option>
+        <option>Pull-up</option>
+        <option>Lat pulldown</option>
+      </select>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+      <div style="border: 1px solid #dfe4e9; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 14px; color: #55606b">Last session</div>
+        <div style="font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums">1.12</div>
+      </div>
+      <div style="border: 1px solid #dfe4e9; border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 14px; color: #55606b">Since previous</div>
+        <div style="font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; color: #00548c">+0.05</div>
+      </div>
+    </div>
+    <div style="font-size: 14px; color: #55606b">1.00 is your first set: 55 kg × 8 on Aug 28.</div>
+
+    <figure style="margin: 0; border: 1px solid #dfe4e9; border-radius: 12px; background: #ffffff; padding: 12px 14px 8px; display: flex; flex-direction: column; gap: 6px">
+      <figcaption style="font-size: 14px; font-weight: 600">Session average, relative to your first set</figcaption>
+      <svg viewBox="0 0 322 200" width="100%" role="img" aria-label="Line chart: session average rose from 0.94 on Aug 28 to 1.12 on Oct 2, crossing 1.00 on Sep 11" style="display: block">
+        <path d="M34 42H312M34 170H312" stroke="#dfe4e9" stroke-width="1"></path>
+        <path d="M34 106H312" stroke="#55606b" stroke-width="1.5" stroke-dasharray="4 4"></path>
+        <g font-family="'Familjen Grotesk', system-ui, sans-serif" font-size="12" fill="#55606b">
+          <text x="0" y="46">1.20</text>
+          <text x="0" y="110" font-weight="700" fill="#0b0f14">1.00</text>
+          <text x="0" y="174">0.80</text>
+          <text x="44" y="194" text-anchor="middle">Aug 28</text>
+          <text x="172" y="194" text-anchor="middle">Sep 15</text>
+          <text x="296" y="194" text-anchor="middle">Oct 2</text>
+          <text x="310" y="120" text-anchor="end">first set</text>
+        </g>
+        <path d="M44 125.2L95.2 112.4L146.4 102.8L197.6 93.2L248.8 83.6L300 67.6" fill="none" stroke="#0071bc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        <g fill="#ffffff" stroke="#0071bc" stroke-width="2.5">
+          <circle cx="44" cy="125.2" r="4"></circle>
+          <circle cx="95.2" cy="112.4" r="4"></circle>
+          <circle cx="146.4" cy="102.8" r="4"></circle>
+          <circle cx="197.6" cy="93.2" r="4"></circle>
+          <circle cx="248.8" cy="83.6" r="4"></circle>
+        </g>
+        <circle cx="300" cy="67.6" r="5" fill="#0071bc"></circle>
+        <text x="300" y="54" text-anchor="middle" font-family="'Familjen Grotesk', system-ui, sans-serif" font-size="13" font-weight="700" fill="#0b0f14">1.12</text>
+      </svg>
+    </figure>
+
+    <section style="display: flex; flex-direction: column">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 6px">
+        <h2 style="margin: 0; font-size: 16px; font-weight: 700">Oct 2</h2>
+        <span style="font-size: 14px; color: #55606b">Average 1.12</span>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-top: 1px solid #dfe4e9; font-size: 16px">
+        <span>Set 1 · 65 kg × 8</span><span style="font-weight: 700; font-variant-numeric: tabular-nums">1.18</span>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-top: 1px solid #dfe4e9; font-size: 16px">
+        <span>Set 2 · 65 kg × 7</span><span style="font-weight: 700; font-variant-numeric: tabular-nums">1.03</span>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-top: 1px solid #dfe4e9; font-size: 16px">
+        <span>Set 3 · 62.5 kg × 8</span><span style="font-weight: 700; font-variant-numeric: tabular-nums">1.14</span>
+      </div>
+    </section>
+  </main>
+
+  <nav aria-label="Main" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #dfe4e9; padding: 8px 8px 20px">
+    <a href="Main.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 13px; font-weight: 500; color: #55606b; text-decoration: none">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7v10M3 9.5v5M18 7v10M21 9.5v5M6 12h12"></path></svg>
+      Train
+    </a>
+    <a href="Progress.dc.html" aria-current="page" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 13px; font-weight: 700; color: #0071bc; text-decoration: none">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M5 15l4-4 4 3 6-8"></path></svg>
+      Progress
+    </a>
+    <a href="Routines.dc.html" style="min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 13px; font-weight: 500; color: #55606b; text-decoration: none">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"></path></svg>
+      Routines
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

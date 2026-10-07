@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Exercise picker</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#0071bc}a:hover{color:#00548c}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #f5f7f9; color: #0b0f14; font-family: 'Familjen Grotesk', system-ui, sans-serif; display: flex; flex-direction: column">
+  <header style="display: flex; align-items: center; gap: 8px; padding: 16px 20px 8px 8px">
+    <a href="Builder.dc.html" aria-label="Back to routine" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #0b0f14">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <h1 style="margin: 0; font-size: 20px; font-weight: 700">Add exercise</h1>
+      <div style="font-size: 14px; color: #55606b">To Upper B</div>
+    </div>
+  </header>
+
+  <div style="padding: 8px 20px 12px; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid #dfe4e9">
+    <div style="position: relative">
+      <label for="search" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%)">Search exercises</label>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#55606b" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="position: absolute; left: 14px; top: 14px"><path d="M11 18a7 7 0 100-14 7 7 0 000 14zM20 20l-4-4"></path></svg>
+      <input id="search" type="search" value="press" placeholder="Search exercises" style="width: 100%; height: 48px; box-sizing: border-box; padding: 0 12px 0 44px; border: 1px solid #bfc7cf; border-radius: 10px; background: #ffffff; font: inherit; font-size: 16px; color: #0b0f14">
+    </div>
+    <div role="group" aria-label="Muscle group" style="display: flex; flex-wrap: wrap; gap: 6px">
+      <button type="button" aria-pressed="false" style="min-height: 44px; padding: 0 14px; border: 1px solid #bfc7cf; border-radius: 999px; background: transparent; font: inherit; font-size: 14px; font-weight: 600; color: #0b0f14">All muscles</button>
+      <button type="button" aria-pressed="true" style="min-height: 44px; padding: 0 14px; border: 1px solid #0b0f14; border-radius: 999px; background: #0b0f14; font: inherit; font-size: 14px; font-weight: 600; color: #ffffff">Chest</button>
+      <button type="button" aria-pressed="false" style="min-height: 44px; padding: 0 14px; border: 1px solid #bfc7cf; border-radius: 999px; background: transparent; font: inherit; font-size: 14px; font-weight: 600; color: #0b0f14">Shoulders</button>
+      <button type="button" aria-pressed="false" style="min-height: 44px; padding: 0 14px; border: 1px solid #bfc7cf; border-radius: 999px; background: transparent; font: inherit; font-size: 14px; font-weight: 600; color: #0b0f14">Back</button>
+      <button type="button" aria-pressed="false" style="min-height: 44px; padding: 0 14px; border: 1px solid #bfc7cf; border-radius: 999px; background: transparent; font: inherit; font-size: 14px; font-weight: 600; color: #0b0f14">Legs</button>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <label for="equipment" style="font-size: 14px; font-weight: 600">Equipment</label>
+      <select id="equipment" style="height: 48px; padding: 0 12px; border: 1px solid #bfc7cf; border-radius: 10px; background: #ffffff; font: inherit; font-size: 16px; color: #0b0f14">
+        <option>Any equipment</option>
+        <option>Barbell</option>
+        <option>Dumbbell</option>
+        <option>Machine</option>
+        <option>Cable</option>
+        <option>Bodyweight</option>
+      </select>
+    </div>
+  </div>
+
+  <main style="flex: 1; padding: 4px 20px 0; display: flex; flex-direction: column">
+    <div style="padding: 10px 0 6px; font-size: 14px; color: #55606b">5 exercises</div>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #dfe4e9">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 16px; font-weight: 600">Barbell bench press</div>
+        <div style="font-size: 14px; color: #55606b">Chest · Barbell</div>
+      </div>
+      <button type="button" aria-label="Add Barbell bench press" style="min-height: 44px; padding: 0 18px; border: 0; border-radius: 10px; background: #0071bc; font: inherit; font-size: 15px; font-weight: 600; color: #ffffff">Add</button>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #dfe4e9">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 16px; font-weight: 600">Dumbbell bench press</div>
+        <div style="font-size: 14px; color: #55606b">Chest · Dumbbell</div>
+      </div>
+      <button type="button" aria-label="Add Dumbbell bench press" style="min-height: 44px; padding: 0 18px; border: 0; border-radius: 10px; background: #0071bc; font: inherit; font-size: 15px; font-weight: 600; color: #ffffff">Add</button>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #dfe4e9">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 16px; font-weight: 600">Incline dumbbell press</div>
+        <div style="font-size: 14px; color: #55606b">Chest · Dumbbell</div>
+      </div>
+      <span style="min-height: 44px; padding: 0 4px; display: flex; align-items: center; font-size: 14px; font-weight: 600; color: #55606b">Already in this day</span>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #dfe4e9">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 16px; font-weight: 600">Incline barbell press</div>
+        <div style="font-size: 14px; color: #55606b">Chest · Barbell</div>
+      </div>
+      <button type="button" aria-label="Add Incline barbell press" style="min-height: 44px; padding: 0 18px; border: 0; border-radius: 10px; background: #0071bc; font: inherit; font-size: 15px; font-weight: 600; color: #ffffff">Add</button>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0">
+      <div style="display: flex; flex-direction: column; gap: 2px">
+        <div style="font-size: 16px; font-weight: 600">Machine chest press</div>
+        <div style="font-size: 14px; color: #55606b">Chest · Machine</div>
+      </div>
+      <button type="button" aria-label="Add Machine chest press" style="min-height: 44px; padding: 0 18px; border: 0; border-radius: 10px; background: #0071bc; font: inherit; font-size: 15px; font-weight: 600; color: #ffffff">Add</button>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>
