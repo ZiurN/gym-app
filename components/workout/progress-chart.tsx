@@ -34,16 +34,16 @@ export function ProgressChart({ points }: ProgressChartProps) {
     <div className="h-56 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-          <CartesianGrid stroke="#e3e1db" vertical={false} />
+          <CartesianGrid stroke="#dfe4e9" vertical={false} />
           <XAxis
             dataKey="label"
-            tick={{ fontSize: 12, fill: "#5c675f" }}
-            axisLine={{ stroke: "#e3e1db" }}
+            tick={{ fontSize: 12, fill: "#55606b" }}
+            axisLine={{ stroke: "#dfe4e9" }}
             tickLine={false}
           />
           <YAxis
             domain={[min - pad, max + pad]}
-            tick={{ fontSize: 12, fill: "#5c675f" }}
+            tick={{ fontSize: 12, fill: "#55606b" }}
             axisLine={false}
             tickLine={false}
             width={40}
@@ -57,9 +57,9 @@ export function ProgressChart({ points }: ProgressChartProps) {
           <Line
             type="monotone"
             dataKey="value"
-            stroke="#1f8a56"
+            stroke="#0071bc"
             strokeWidth={2}
-            dot={{ r: 4, fill: "#1f8a56", stroke: "#1f8a56" }}
+            dot={{ r: 4, fill: "#0071bc", stroke: "#0071bc" }}
             activeDot={{ r: 5 }}
           />
         </LineChart>

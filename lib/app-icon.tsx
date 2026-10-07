@@ -8,7 +8,7 @@ export function AppIcon({ size }: { size: number }) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #1f8a56 0%, #14532d 100%)",
+        background: "linear-gradient(135deg, #0071bc 0%, #004a7c 100%)",
         borderRadius: size * 0.22,
       }}
     >
