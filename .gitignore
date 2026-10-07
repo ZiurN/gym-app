@@ -47,3 +47,6 @@ next-env.d.ts
 .opencode/
 openspec/
 skills-lock.json
+
+# Downloaded source datasets (see docs/CATALOG.md)
+.dataset-cache/
