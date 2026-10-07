@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Familjen_Grotesk } from "next/font/google";
 import Link from "next/link";
 import { AuthHeader } from "@/components/auth/auth-header";
+import { BottomNav } from "@/components/nav/bottom-nav";
+import { getCurrentUser } from "@/lib/auth/session";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/app";
 import "./globals.css";
 
@@ -24,11 +26,13 @@ export const viewport: Viewport = {
   themeColor: "#0071bc",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await getCurrentUser().catch(() => null);
+
   return (
     <html
       lang="en"
@@ -36,7 +40,7 @@ export default function RootLayout({
     >
       <body className="min-h-dvh font-sans">
         <div className="border-b bg-background/80 backdrop-blur">
-          <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+          <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-2 sm:px-6">
             <Link href="/" className="text-sm font-semibold tracking-tight">
               {APP_NAME}
             </Link>
@@ -44,6 +48,7 @@ export default function RootLayout({
           </div>
         </div>
         {children}
+        {user ? <BottomNav /> : null}
       </body>
     </html>
   );
