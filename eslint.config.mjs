@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Tooling installed by AI assistants; not part of the app.
+    ".agents/**",
+    ".claude/**",
+    ".crush/**",
+    ".cursor/**",
+    ".opencode/**",
   ]),
 ]);
 

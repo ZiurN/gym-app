@@ -1,4 +1,5 @@
 import { neon } from "@neondatabase/serverless";
+import type { BatchItem } from "drizzle-orm/batch";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 
@@ -32,3 +33,12 @@ export const db = new Proxy({} as Db, {
     return typeof value === "function" ? value.bind(instance) : value;
   },
 });
+
+/**
+ * Runs the statements as one transaction. The HTTP driver has no interactive
+ * transactions, so this is the only way to make several writes atomic.
+ */
+export async function runBatch(queries: BatchItem<"pg">[]): Promise<void> {
+  if (queries.length === 0) return;
+  await getDb().batch(queries as [BatchItem<"pg">, ...BatchItem<"pg">[]]);
+}

@@ -8,6 +8,34 @@
       "when": 1787447102295,
       "tag": "0000_auth-init",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1787866775982,
+      "tag": "0001_yummy_the_anarchist",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791313037323,
+      "tag": "0002_routines-expand",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791313050131,
+      "tag": "0003_routines-contract",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791331611871,
+      "tag": "0004_exercise-details",
+      "breakpoints": true
     }
   ]
 }
