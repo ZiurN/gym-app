@@ -14,10 +14,10 @@ export async function getCurrentUser() {
 }
 
 /** Use in protected server pages/layouts. */
-export async function requireUser() {
+export async function requireUser(callbackPath = "/cuenta") {
   const user = await getCurrentUser();
   if (!user) {
-    redirect("/login?callbackUrl=/cuenta");
+    redirect(`/login?callbackUrl=${encodeURIComponent(callbackPath)}`);
   }
   return user;
 }

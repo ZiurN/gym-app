@@ -23,11 +23,18 @@ export default async function AccountPage() {
           </Badge>
           <CardTitle>Tu cuenta</CardTitle>
           <CardDescription>
-            Esta zona requiere sesión. Aquí vivirán más adelante tus entrenamientos y
-            progreso.
+            Registra tus entrenamientos en vivo y consulta tu progreso.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 text-sm">
+          <div className="flex flex-wrap gap-2">
+            <Button asChild>
+              <Link href="/entrenar">Ir a entrenar</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/progreso">Ver progreso</Link>
+            </Button>
+          </div>
           <div>
             <p className="text-muted-foreground">Nombre</p>
             <p className="font-medium">{user.name ?? "—"}</p>

@@ -25,6 +25,15 @@ export async function AuthHeader() {
 
   return (
     <div className="flex max-w-full items-center gap-2">
+      <Button asChild variant="default" size="sm">
+        <Link href="/entrenar">Entrenar</Link>
+      </Button>
+      <Button asChild variant="ghost" size="sm">
+        <Link href="/progreso">Progreso</Link>
+      </Button>
+      <Button asChild variant="ghost" size="sm">
+        <Link href="/routines">Rutinas</Link>
+      </Button>
       <Button asChild variant="ghost" size="sm" className="max-w-[12rem] truncate">
         <Link href="/cuenta" title={label}>
           {label}
