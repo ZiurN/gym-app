@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dumbbell } from "lucide-react";
+import { StartWorkoutButton } from "@/components/workout/start-workout-button";
 
 export default async function EntrenarPage() {
   const user = await requireUser("/train");
@@ -76,9 +77,21 @@ export default async function EntrenarPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button asChild variant={isNext ? "default" : "outline"}>
-                    <Link href={`/train/${day.id}`}>Start</Link>
-                  </Button>
+                  {day.id === inProgress?.routineDayId ? (
+                    <Button asChild>
+                      <Link href={`/train/${day.id}`}>Resume</Link>
+                    </Button>
+                  ) : (
+                    <div className="flex flex-wrap items-start gap-2">
+                      <StartWorkoutButton
+                        dayId={day.id}
+                        variant={isNext ? "default" : "outline"}
+                      />
+                      <Button asChild variant="ghost">
+                        <Link href={`/train/${day.id}`}>View</Link>
+                      </Button>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             );

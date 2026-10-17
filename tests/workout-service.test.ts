@@ -24,6 +24,7 @@ import {
   abandonSessionForUser,
   completeSessionForUser,
   completeSetForUser,
+  getDayState,
   startOrResumeSession,
 } from "@/lib/workout/session-service";
 import { createTestDb, insertUser, type Exec } from "./helpers/db";
@@ -148,6 +149,37 @@ describe("starting a session", () => {
     expect(second).not.toBe(first);
     const [{ n }] = await exec(`SELECT count(*)::int AS n FROM workout_set`);
     expect(n).toBe(0); // the discarded session left nothing behind
+  });
+});
+
+describe("viewing a day", () => {
+  const sessionCount = async () =>
+    (await exec(`SELECT count(*)::int AS n FROM workout_session`))[0].n;
+
+  it("never starts or discards a workout", async () => {
+    expect(await getDayState(userId, input.days[0].id)).toMatchObject({
+      day: { name: "Upper" }, session: null, otherOpen: null,
+    });
+    expect(await sessionCount()).toBe(0);
+
+    const open = await start(0);
+    expect((await getDayState(userId, input.days[0].id))?.session?.id).toBe(open);
+    expect(await getDayState(userId, input.days[1].id)).toMatchObject({
+      session: null, otherOpen: { id: open },
+    });
+    expect(await sessionCount()).toBe(1);
+  });
+
+  it("keeps a discarded workout gone", async () => {
+    const open = await start(0);
+    await abandonSessionForUser(userId, open);
+    expect(await getDayState(userId, input.days[0].id)).toMatchObject({ session: null });
+    expect(await sessionCount()).toBe(0);
+  });
+
+  it("refuses a day outside the active routine", async () => {
+    const inactive = await newRoutine(userId, false);
+    expect(await getDayState(userId, inactive.value.days[0].id)).toBeNull();
   });
 });
 

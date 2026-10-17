@@ -34,6 +34,22 @@ async function getActiveRoutineDay(userId: string, routineDayId: string) {
   return day ?? null;
 }
 
+/**
+ * What a day's screen shows. Read-only: looking at a day never starts or
+ * discards a workout, so a refresh after discarding can't bring one back.
+ */
+export async function getDayState(userId: string, routineDayId: string) {
+  const day = await getActiveRoutineDay(userId, routineDayId);
+  if (!day) return null;
+  const open = await getInProgressSession(userId);
+  const isThisDay = open?.routineDayId === routineDayId;
+  return {
+    day,
+    session: isThisDay ? open : null,
+    otherOpen: open && !isThisDay ? open : null,
+  };
+}
+
 export async function abandonSessionForUser(
   userId: string,
   sessionId: string,
