@@ -57,6 +57,20 @@ describe("database rules", () => {
     await expect(set(3, "left")).rejects.toThrow(/workout_set_slot_uq/);
   });
 
+  it("refuses a NaN weight but accepts a missing one", async () => {
+    const { exec, userId, exerciseId } = await migrated();
+    const [{ id: sessionId }] = await session(exec, userId, "in_progress");
+    const set = (setIndex: number, load: string | null) =>
+      exec(
+        `INSERT INTO workout_set (id, "sessionId", "userId", "exerciseId", "setIndex", modality, load)
+         VALUES ($1, $2, $3, $4, $5, 'load_reps', $6::real)`,
+        [randomUUID(), sessionId, userId, exerciseId, setIndex, load],
+      );
+    await set(1, "12.5");
+    await set(2, null);
+    await expect(set(3, "NaN")).rejects.toThrow(/workout_set_load_not_nan/);
+  });
+
   it("refuses to delete an exercise that a set references", async () => {
     const { exec, userId, exerciseId } = await migrated();
     const [{ id: sessionId }] = await session(exec, userId, "completed");

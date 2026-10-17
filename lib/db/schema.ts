@@ -1,5 +1,6 @@
 import {
   boolean,
+  check,
   index,
   integer,
   pgTable,
@@ -260,6 +261,8 @@ export const workoutSets = pgTable(
     unique("workout_set_slot_uq")
       .on(table.sessionId, table.exerciseId, table.setIndex, table.side)
       .nullsNotDistinct(),
+    // Postgres accepts NaN in a real column; a misread "12,5" once stored one.
+    check("workout_set_load_not_nan", sql`${table.load} <> 'NaN'::real`),
   ],
 );
 

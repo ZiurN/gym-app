@@ -28,6 +28,11 @@ import type {
 } from "@/lib/workout/types";
 import { ExerciseInfoButton } from "@/components/exercises/exercise-info-button";
 import { RestTimer } from "@/components/workout/rest-timer";
+import {
+  parseWeight,
+  parseWholeNumber,
+  weightForInput,
+} from "@/lib/workout/figures";
 import { Check, ChevronLeft } from "lucide-react";
 
 type WorkoutSessionClientProps = {
@@ -133,7 +138,8 @@ export function WorkoutSessionClient({
     ? sets.findLast((set) => set.exerciseId === active.exercise.id)
     : undefined;
   const prefill = active ? prefills[active.exercise.id] : undefined;
-  const load = typed.load ?? (lastHere?.load ?? prefill?.load)?.toString() ?? "";
+  const lastLoad = lastHere?.load ?? prefill?.load;
+  const load = typed.load ?? (lastLoad == null ? "" : weightForInput(lastLoad));
   const reps = typed.reps ?? (lastHere?.reps ?? prefill?.reps)?.toString() ?? "";
   const durationSec =
     typed.durationSec ??
@@ -148,23 +154,24 @@ export function WorkoutSessionClient({
     setError(null);
     const timed = active.exercise.modality === "time";
 
-    if (!timed && (load.trim() === "" || !(Number(reps) > 0))) {
-      setError("Enter weight and reps.");
+    const figures = timed
+      ? [parseWholeNumber(durationSec, "seconds")]
+      : [parseWeight(load), parseWholeNumber(reps, "reps")];
+    const invalid = figures.find((figure) => !figure.ok);
+    if (invalid && !invalid.ok) {
+      setError(invalid.message);
       return;
     }
-    if (timed && !(Number(durationSec) > 0)) {
-      setError("Enter the duration in seconds.");
-      return;
-    }
+    const [first, second] = figures.map((figure) => (figure.ok ? figure.value : 0));
 
     const payload = {
       exerciseId: nextSlot.exerciseId,
       setIndex: nextSlot.setIndex,
       side: nextSlot.side,
       weightUnit: timed ? undefined : weightUnit,
-      load: timed ? undefined : Number(load),
-      reps: timed ? undefined : Number(reps),
-      durationSec: timed ? Number(durationSec) : undefined,
+      load: timed ? undefined : first,
+      reps: timed ? undefined : second,
+      durationSec: timed ? first : undefined,
     };
 
     startTransition(async () => {
@@ -420,7 +427,7 @@ export function WorkoutSessionClient({
                           <Check className="size-4 text-primary" />
                           {logged.durationSec != null
                             ? `${logged.durationSec} s`
-                            : `${logged.load ?? "—"} ${logged.weightUnit ?? ""} × ${logged.reps ?? "—"}`}
+                            : `${logged.load == null ? "—" : weightForInput(logged.load)} ${logged.weightUnit ?? ""} × ${logged.reps ?? "—"}`}
                         </span>
                       ) : (
                         <span className="text-muted-foreground">To do</span>

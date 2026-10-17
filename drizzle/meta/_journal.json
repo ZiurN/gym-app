@@ -36,6 +36,13 @@
       "when": 1791331611871,
       "tag": "0004_exercise-details",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1792170794578,
+      "tag": "0005_load-not-nan",
+      "breakpoints": true
     }
   ]
 }

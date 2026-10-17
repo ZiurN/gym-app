@@ -189,6 +189,34 @@ describe("logging sets", () => {
     expect(set).toMatchObject({ durationSec: 45, modality: "time", load: null });
   });
 
+  it("rejects invalid figures sent past the screen and stores nothing", async () => {
+    const sessionId = await start();
+    for (const bad of [
+      bench(1, Number.NaN, 8),
+      bench(1, 12.55, 8),
+      bench(1, -5, 8),
+      bench(1, 60, 8.5),
+      bench(1, 60, 0),
+      { ...bench(1), load: undefined },
+      { exerciseId: ids["weighted-front-plank"], setIndex: 1, durationSec: 4.5 },
+    ]) {
+      await expect(completeSetForUser(userId, sessionId, bad), JSON.stringify(bad)).rejects.toThrow();
+    }
+    expect(await getSessionSets(sessionId)).toEqual([]);
+
+    const timedSession = await start(1);
+    await expect(
+      completeSetForUser(userId, timedSession, { exerciseId: ids["weighted-front-plank"], setIndex: 1 }),
+    ).rejects.toThrow();
+    expect(await getSessionSets(timedSession)).toEqual([]);
+  });
+
+  it("stores a weight with one decimal", async () => {
+    const sessionId = await start();
+    const { set } = await completeSetForUser(userId, sessionId, bench(1, 12.5, 8));
+    expect(set.load).toBe(12.5);
+  });
+
   it("rejects an exercise that is not in the day and a set beyond the target", async () => {
     const sessionId = await start();
     await expect(

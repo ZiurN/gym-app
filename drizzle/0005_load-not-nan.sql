@@ -1,0 +1,1 @@
+ALTER TABLE "workout_set" ADD CONSTRAINT "workout_set_load_not_nan" CHECK ("workout_set"."load" <> 'NaN'::real);

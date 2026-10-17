@@ -14,6 +14,7 @@ import {
   getSessionById,
   getSessionSets,
 } from "@/lib/workout/queries";
+import { isValidWeight, isValidWholeNumber } from "@/lib/workout/figures";
 import type { CompletedSetInput } from "@/lib/workout/types";
 
 /** The day if it belongs to the user's active routine. */
@@ -129,6 +130,15 @@ export async function completeSetForUser(
   const other = isMain ? position.alternative : position.exercise;
   if (other && logged.some((set) => set.exerciseId === other.id)) {
     throw new Error(`You already logged sets of ${other.name} in this workout.`);
+  }
+
+  // The screen checks these too; this guards against anything that bypasses it.
+  const figuresValid =
+    exercise.modality === "time"
+      ? isValidWholeNumber(input.durationSec)
+      : isValidWeight(input.load) && isValidWholeNumber(input.reps);
+  if (!figuresValid) {
+    throw new Error("The weight, reps or seconds of that set are not valid.");
   }
 
   const needsSide = exercise.modality === "per_side";
