@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { requireUser } from "@/lib/auth/session";
 import { getDayState } from "@/lib/workout/session-service";
+import { getLastWorkouts, workoutDateLabel } from "@/lib/workout/history";
 import {
   getDayPositions,
   getPrefills,
@@ -40,6 +41,7 @@ export default async function LiveWorkoutPage({ params }: PageProps) {
 
   if (!state.session) {
     const { otherOpen } = state;
+    const [last] = await getLastWorkouts(user.id, [state.day]);
     return (
       <main className="mx-auto w-full max-w-lg px-4 py-6 pb-28 sm:px-6">
         <Button asChild variant="ghost" size="sm" className="mb-4">
@@ -48,7 +50,17 @@ export default async function LiveWorkoutPage({ params }: PageProps) {
             Train
           </Link>
         </Button>
-        <h1 className="mb-4 text-2xl font-bold tracking-tight">{state.day.name}</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{state.day.name}</h1>
+        {last?.completedAt ? (
+          <Link
+            href={`/progress/days/${dayId}`}
+            className="mt-1 inline-flex items-center gap-1 text-sm text-primary underline-offset-4 hover:underline"
+          >
+            Last time · {workoutDateLabel(last.completedAt)}
+            <ChevronRight className="size-4" aria-hidden="true" />
+          </Link>
+        ) : null}
+        <div className="mb-4" />
 
         {otherOpen ? (
           <Card className="mb-4 border-primary/30 bg-primary/5">

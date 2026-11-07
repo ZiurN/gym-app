@@ -219,6 +219,11 @@ export const workoutSessions = pgTable(
       table.status,
       table.completedAt,
     ),
+    // Last workout of a day; also serves the set-null when a day is deleted.
+    index("workout_session_day_completed_idx").on(
+      table.routineDayId,
+      table.completedAt,
+    ),
     uniqueIndex("workout_session_one_in_progress_idx")
       .on(table.userId)
       .where(sql`${table.status} = 'in_progress'`),

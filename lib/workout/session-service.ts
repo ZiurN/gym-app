@@ -18,7 +18,7 @@ import { isValidWeight, isValidWholeNumber } from "@/lib/workout/figures";
 import type { CompletedSetInput } from "@/lib/workout/types";
 
 /** The day if it belongs to the user's active routine. */
-async function getActiveRoutineDay(userId: string, routineDayId: string) {
+export async function getActiveRoutineDay(userId: string, routineDayId: string) {
   const [day] = await db
     .select({ id: routineDays.id, name: routineDays.name })
     .from(routineDays)

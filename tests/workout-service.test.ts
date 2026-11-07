@@ -27,6 +27,8 @@ import {
   getDayState,
   startOrResumeSession,
 } from "@/lib/workout/session-service";
+import { getLastWorkoutForDay, getLastWorkouts } from "@/lib/workout/history";
+import { loggedSetFigures } from "@/components/workout/logged-set-figures";
 import { createTestDb, insertUser, type Exec } from "./helpers/db";
 import { day, exercise, routine } from "./helpers/routine";
 
@@ -367,6 +369,58 @@ describe("history, pre-fill and progress", () => {
     expect(await deleteRoutine(userId, routineId)).toEqual({ ok: true });
     expect(await getExerciseProgressPoints(userId, benchRef())).toHaveLength(1);
     expect(await getLoggedExercises(userId)).toHaveLength(1);
+  });
+
+  it("lists the last workout of each active day, newest first, untrained days last", async () => {
+    const days = input.days.map((d) => ({ id: d.id, name: d.name }));
+    expect((await getLastWorkouts(userId, days)).map((r) => [r.dayName, r.completedAt])).toEqual([
+      ["Upper", null], ["Lower", null],
+    ]);
+    await completedSession(1, [], 5);
+    await completedSession(0, [bench(1)], 9);
+    expect((await getLastWorkouts(userId, days)).map((r) => r.dayName)).toEqual(["Lower", "Upper"]);
+    await completedSession(0, [bench(1)], 1);
+    const open = await start(1); // in progress doesn't count
+    await completeSetForUser(userId, open, { exerciseId: ids["weighted-front-plank"], setIndex: 1, durationSec: 30 });
+    expect((await getLastWorkouts(userId, days)).map((r) => r.dayName)).toEqual(["Upper", "Lower"]);
+    await abandonSessionForUser(userId, open);
+
+    // A new routine (or a copy) has new days: nothing done yet.
+    const fresh = await newRoutine(userId, true);
+    expect(
+      (await getLastWorkouts(userId, fresh.value.days.map((d) => ({ id: d.id, name: d.name }))))
+        .every((r) => r.completedAt == null),
+    ).toBe(true);
+  });
+
+  it("shows the last workout of a day as it was recorded", async () => {
+    await completedSession(0, [bench(1, 50, 10)], 6);
+    await completedSession(0, [
+      bench(1, 60, 8),
+      bench(2, 62.5, 6),
+      { exerciseId: ids["cable-pulldown"], setIndex: 1, load: 45, reps: 10, weightUnit: "kg" },
+      { exerciseId: ids["dumbbell-one-arm-bent-over-row"], setIndex: 1, side: "left", load: 20, reps: 12, weightUnit: "kg" },
+      { exerciseId: ids["dumbbell-one-arm-bent-over-row"], setIndex: 1, side: "right", load: 20, reps: 11, weightUnit: "kg" },
+    ], 1);
+
+    const edited = structuredClone(input);
+    edited.days[0].exercises = edited.days[0].exercises.filter(
+      (e) => e.exerciseId !== ids["dumbbell-one-arm-bent-over-row"],
+    );
+    expect(await saveRoutine(userId, routineId, edited)).toEqual({ ok: true });
+
+    const result = await getLastWorkoutForDay(userId, input.days[0].id);
+    const workout = result?.workout;
+    expect(workout).toMatchObject({ dayName: "Upper", setsDone: 5, setsPlanned: 6 });
+    expect(workout?.exercises.map((e) => [e.exercise.slug, e.sets.map(loggedSetFigures), e.skipped, e.isAlternative, e.removed])).toEqual([
+      ["barbell-bench-press", ["60 kg × 8", "62.5 kg × 6"], 0, false, false],
+      ["cable-pulldown", ["45 kg × 10"], 1, true, false],
+      ["dumbbell-one-arm-bent-over-row", ["20 kg × 12", "20 kg × 11"], 0, false, true],
+    ]);
+
+    expect((await getLastWorkoutForDay(userId, input.days[1].id))?.workout).toBeNull();
+    const other = await insertUser(exec);
+    expect(await getLastWorkoutForDay(other, input.days[0].id)).toBeNull();
   });
 
   it("lists each logged exercise once with its latest session", async () => {

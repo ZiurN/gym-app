@@ -1,0 +1,1 @@
+CREATE INDEX "workout_session_day_completed_idx" ON "workout_session" USING btree ("routineDayId","completedAt");

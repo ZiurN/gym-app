@@ -27,6 +27,7 @@ import type {
   WeightUnit,
 } from "@/lib/workout/types";
 import { ExerciseInfoButton } from "@/components/exercises/exercise-info-button";
+import { loggedSetFigures } from "@/components/workout/logged-set-figures";
 import { RestTimer } from "@/components/workout/rest-timer";
 import {
   parseWeight,
@@ -425,9 +426,7 @@ export function WorkoutSessionClient({
                       {logged ? (
                         <span className="flex items-center gap-1 text-muted-foreground">
                           <Check className="size-4 text-primary" />
-                          {logged.durationSec != null
-                            ? `${logged.durationSec} s`
-                            : `${logged.load == null ? "—" : weightForInput(logged.load)} ${logged.weightUnit ?? ""} × ${logged.reps ?? "—"}`}
+                          {loggedSetFigures(logged)}
                         </span>
                       ) : (
                         <span className="text-muted-foreground">To do</span>

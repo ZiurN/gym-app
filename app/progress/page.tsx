@@ -3,10 +3,19 @@ import { ExerciseInfoButton } from "@/components/exercises/exercise-info-button"
 import { requireUser } from "@/lib/auth/session";
 import { formatLatest } from "@/lib/workout/format-progress";
 import { getLoggedExercises } from "@/lib/workout/queries";
+import { getActiveRoutine } from "@/lib/routines/service";
+import { getLastWorkouts, workoutDateLabel } from "@/lib/workout/history";
+import { ChevronRight } from "lucide-react";
 
 export default async function ProgresoIndexPage() {
   const user = await requireUser("/progress");
-  const logged = await getLoggedExercises(user.id);
+  const [logged, routine] = await Promise.all([
+    getLoggedExercises(user.id),
+    getActiveRoutine(user.id),
+  ]);
+  const lastWorkouts = routine
+    ? await getLastWorkouts(user.id, routine.days)
+    : [];
 
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
@@ -17,6 +26,36 @@ export default async function ProgresoIndexPage() {
         </p>
       </header>
 
+      {lastWorkouts.length > 0 ? (
+        <section className="mb-10 max-w-3xl">
+          <h2 className="mb-3 text-lg font-semibold">Last workouts</h2>
+          <ul className="border-y border-border">
+            {lastWorkouts.map(({ dayId, dayName, completedAt }) => (
+              <li key={dayId} className="border-b border-border last:border-b-0">
+                {completedAt ? (
+                  <Link
+                    href={`/progress/days/${dayId}`}
+                    className="flex items-center justify-between gap-4 py-3 text-sm hover:text-foreground"
+                  >
+                    <span className="font-medium">{dayName}</span>
+                    <span className="flex items-center gap-1 text-muted-foreground">
+                      {workoutDateLabel(completedAt)}
+                      <ChevronRight className="size-4" aria-hidden="true" />
+                    </span>
+                  </Link>
+                ) : (
+                  <div className="flex items-center justify-between gap-4 py-3 text-sm">
+                    <span className="font-medium">{dayName}</span>
+                    <span className="text-muted-foreground">Not done yet</span>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      <h2 className="mb-3 text-lg font-semibold">By exercise</h2>
       {logged.length === 0 ? (
         <p className="max-w-prose text-muted-foreground">
           No finished workouts yet.{" "}

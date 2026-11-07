@@ -45,7 +45,7 @@
       "y": 0
     },
     "Progress.dc.html": {
-      "h": 844,
+      "h": 1120,
       "title": "Progress",
       "w": 390,
       "x": 940,
@@ -78,6 +78,13 @@
       "w": 1280,
       "x": 3240,
       "y": 1820
+    },
+    "LastWorkout.dc.html": {
+      "h": 1100,
+      "title": "Last workout of a day",
+      "w": 390,
+      "x": 940,
+      "y": 3020
     }
   },
   "createdOnFiles": {
@@ -110,6 +117,7 @@
     "Main.dc.html",
     "Session.dc.html",
     "Progress.dc.html",
+    "LastWorkout.dc.html",
     "Welcome.dc.html",
     "Routines.dc.html",
     "Builder.dc.html",
