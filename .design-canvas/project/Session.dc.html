@@ -14,7 +14,7 @@ body{margin:0}
 a{color:#0071bc}a:hover{color:#00548c}
 </style>
 </helmet>
-<div style="width: 390px; height: 844px; box-sizing: border-box; background: #f5f7f9; color: #0b0f14; font-family: 'Familjen Grotesk', system-ui, sans-serif; display: flex; flex-direction: column">
+<div style="width: 390px; min-height: 844px; box-sizing: border-box; background: #f5f7f9; color: #0b0f14; font-family: 'Familjen Grotesk', system-ui, sans-serif; display: flex; flex-direction: column">
   <header style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 16px 12px 8px 8px">
     <a href="Main.dc.html" aria-label="Back to Train" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: #0b0f14">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
@@ -90,10 +90,15 @@ a{color:#0071bc}a:hover{color:#00548c}
       </div>
       <button type="button" style="min-height: 44px; padding: 0 10px; border: 0; background: transparent; font: inherit; font-size: 14px; font-weight: 600; color: #0071bc; text-align: right">Switch to Lat pulldown</button>
     </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px; padding-top: 4px">
+      <button type="button" style="min-height: 52px; border: 1px solid #bfc7cf; border-radius: 10px; background: #ffffff; font: inherit; font-size: 16px; font-weight: 700; color: #0b0f14">Finish early</button>
+      <div style="font-size: 13px; color: #55606b; text-align: center">Saves the 13 sets you did. Exercises you didn't start won't count toward progress.</div>
+    </div>
   </main>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":940}}'>
 class Component extends DCLogic {
 renderVals() {
 return {};

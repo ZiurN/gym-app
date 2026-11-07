@@ -344,7 +344,7 @@ describe("history, pre-fill and progress", () => {
   it("finds the last completed day of the active routine", async () => {
     const dayIds = input.days.map((d) => d.id);
     expect(await getLastCompletedDayId(userId, dayIds)).toBeNull();
-    await completedSession(1, [], 3);
+    await completedSession(1, [{ exerciseId: ids["weighted-front-plank"], setIndex: 1, durationSec: 30 }], 3);
     await completedSession(0, [bench(1)], 1);
     expect(await getLastCompletedDayId(userId, dayIds)).toBe(dayIds[0]);
   });
@@ -371,12 +371,44 @@ describe("history, pre-fill and progress", () => {
     expect(await getLoggedExercises(userId)).toHaveLength(1);
   });
 
+  it("finishes early with only the exercises that were done counting", async () => {
+    await completedSession(0, [
+      bench(1, 50, 10),
+      { exerciseId: ids["pull-up"], setIndex: 1, load: 0, reps: 8, weightUnit: "kg" },
+    ], 7);
+    const sessionId = await start(0);
+    await completeSetForUser(userId, sessionId, bench(1, 60, 8));
+    await completeSessionForUser(userId, sessionId); // 1 of 5 planned sets
+
+    const [session] = await exec(`SELECT status FROM workout_session WHERE id = $1`, [sessionId]);
+    expect(session.status).toBe("completed");
+    expect((await getExerciseProgressPoints(userId, benchRef())).map((p) => p.value)).toEqual([50, 60]);
+    const pullUp = { id: ids["pull-up"], modality: "load_reps" as const };
+    expect(await getExerciseProgressPoints(userId, pullUp)).toHaveLength(1);
+    expect((await getPrefills(userId, [ids["pull-up"]]))[ids["pull-up"]]).toMatchObject({ load: 0, reps: 8 });
+
+    const last = (await getLastWorkoutForDay(userId, input.days[0].id))?.workout;
+    expect(last).toMatchObject({ setsDone: 1, setsPlanned: 6 });
+    expect(last?.exercises.map((e) => [e.exercise.slug, e.sets.length, e.skipped])).toEqual([
+      ["barbell-bench-press", 1, 1],
+      ["pull-up", 0, 2],
+      ["dumbbell-one-arm-bent-over-row", 0, 2],
+    ]);
+  });
+
+  it("refuses to finish a workout with no sets", async () => {
+    const sessionId = await start(0);
+    await expect(completeSessionForUser(userId, sessionId)).rejects.toThrow(/at least one set/);
+    const [session] = await exec(`SELECT status FROM workout_session WHERE id = $1`, [sessionId]);
+    expect(session.status).toBe("in_progress");
+  });
+
   it("lists the last workout of each active day, newest first, untrained days last", async () => {
     const days = input.days.map((d) => ({ id: d.id, name: d.name }));
     expect((await getLastWorkouts(userId, days)).map((r) => [r.dayName, r.completedAt])).toEqual([
       ["Upper", null], ["Lower", null],
     ]);
-    await completedSession(1, [], 5);
+    await completedSession(1, [{ exerciseId: ids["weighted-front-plank"], setIndex: 1, durationSec: 30 }], 5);
     await completedSession(0, [bench(1)], 9);
     expect((await getLastWorkouts(userId, days)).map((r) => r.dayName)).toEqual(["Lower", "Upper"]);
     await completedSession(0, [bench(1)], 1);

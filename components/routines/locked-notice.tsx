@@ -67,7 +67,7 @@ export function LockedNotice({ workout }: { workout: OpenWorkout }) {
           <Button
             type="button"
             variant="outline"
-            disabled={pending}
+            disabled={pending || workout.setsLogged === 0}
             onClick={() => run(completeSessionAction)}
           >
             Finish and save
@@ -86,6 +86,11 @@ export function LockedNotice({ workout }: { workout: OpenWorkout }) {
             Discard workout
           </Button>
         </div>
+        {workout.setsLogged === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            Log at least one set to finish, or discard the workout.
+          </p>
+        ) : null}
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
       </CardContent>
     </Card>

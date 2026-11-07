@@ -218,6 +218,11 @@ export async function completeSessionForUser(userId: string, sessionId: string) 
   if (!session || session.status !== "in_progress") {
     throw new Error("There is no workout in progress to finish.");
   }
+  // Finishing early is fine; finishing with nothing done is a discard.
+  const sets = await getSessionSets(sessionId);
+  if (sets.length === 0) {
+    throw new Error("Log at least one set to finish, or discard the workout.");
+  }
 
   await db
     .update(workoutSessions)

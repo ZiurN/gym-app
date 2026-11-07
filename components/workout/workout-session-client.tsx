@@ -130,6 +130,7 @@ export function WorkoutSessionClient({
   const nextSlot = useMemo(() => findNextSlot(slots, sets), [slots, sets]);
   const active = resolved.find((r) => r.position.id === nextSlot?.positionId);
   const allDone = nextSlot == null;
+  const setsDone = slots.filter((slot) => isSlotLogged(sets, slot)).length;
 
   // Inputs start from the last set of this exercise in this session, then
   // from the last completed session; what the user types overrides both.
@@ -208,10 +209,26 @@ export function WorkoutSessionClient({
 
   const handleFinish = () => {
     startTransition(async () => {
-      await completeSessionAction(sessionId);
-      router.push("/train");
-      router.refresh();
+      setError(null);
+      try {
+        await completeSessionAction(sessionId);
+        router.push("/train");
+        router.refresh();
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "The workout could not be finished.");
+      }
     });
+  };
+
+  const handleFinishEarly = () => {
+    if (
+      !window.confirm(
+        `Finish now? You did ${setsDone} of ${slots.length} sets. Exercises you didn't start won't count toward progress.`,
+      )
+    ) {
+      return;
+    }
+    handleFinish();
   };
 
   const handleLeave = () => {
@@ -440,8 +457,18 @@ export function WorkoutSessionClient({
       </section>
 
       <div className="mt-6 flex flex-col gap-2">
+        {!allDone && setsDone > 0 ? (
+          <Button variant="outline" onClick={handleFinishEarly} disabled={pending}>
+            Finish early
+          </Button>
+        ) : null}
         {!allDone ? (
-          <Button variant="outline" onClick={handleLeave} disabled={pending}>
+          <Button
+            variant="ghost"
+            className="text-destructive"
+            onClick={handleLeave}
+            disabled={pending}
+          >
             Discard workout
           </Button>
         ) : null}
